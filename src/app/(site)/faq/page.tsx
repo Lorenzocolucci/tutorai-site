@@ -6,12 +6,13 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 
 // Componente per i Dati Strutturati della pagina FAQ
 const FaqPageStructuredData = ({ faqData }: any) => {
-    const questions = (Object.values(faqData).flat() as { question: string; answer: string }[]).map(item => ({
+    type FaqItemType = { question: string; answer: string };
+    const questions = (Object.values(faqData).flat() as FaqItemType[]).map(item => ({
         "@type": "Question",
-        "name": item.question,
-        "acceptedAnswer": {
+        name: item.question,
+        acceptedAnswer: {
             "@type": "Answer",
-            "text": item.answer
+            text: item.answer
         }
     }));
 
