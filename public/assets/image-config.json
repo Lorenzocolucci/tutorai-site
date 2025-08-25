@@ -1,0 +1,573 @@
+{
+  "hero": {
+    "desktop": {
+      "students": [
+        {
+          "src": "/assets/hero/pexels-eren-li-7241361.jpg",
+          "alt": "Studente con cuffie che studia",
+          "width": 1200,
+          "height": 800,
+          "description": "Studente concentrato con cuffie"
+        },
+        {
+          "src": "/assets/hero/pexels-karolina-grabowska-7283630.jpg",
+          "alt": "Ragazza con cuffie che studia",
+          "width": 1200,
+          "height": 800,
+          "description": "Studentessa moderna con cuffie"
+        },
+        {
+          "src": "/assets/hero/pexels-julio-lopez-75309646-29179700.jpg",
+          "alt": "Studentessa concentrata che studia",
+          "width": 1200,
+          "height": 800,
+          "description": "Studentessa molto concentrata"
+        },
+        {
+          "src": "/assets/hero/pexels-ivan-samkov-4624901.jpg",
+          "alt": "Studente con laptop",
+          "width": 1200,
+          "height": 800,
+          "description": "Studente che usa il laptop"
+        },
+        {
+          "src": "/assets/hero/pexels-ivan-samkov-4624915.jpg",
+          "alt": "Studentessa con laptop",
+          "width": 1200,
+          "height": 800,
+          "description": "Studentessa che usa il laptop"
+        },
+        {
+          "src": "/assets/hero/pexels-ivan-samkov-4784014.jpg",
+          "alt": "Studente concentrato",
+          "width": 1200,
+          "height": 800,
+          "description": "Studente molto concentrato"
+        }
+      ],
+      "families": [
+        {
+          "src": "/assets/hero/pexels-cottonbro-6986442.jpg",
+          "alt": "Famiglia con laptop",
+          "width": 1200,
+          "height": 800,
+          "description": "Famiglia che studia con laptop"
+        },
+        {
+          "src": "/assets/hero/pexels-cottonbro-7014773.jpg",
+          "alt": "Famiglia che studia",
+          "width": 1200,
+          "height": 800,
+          "description": "Famiglia che studia insieme"
+        },
+        {
+          "src": "/assets/hero/pexels-cottonbro-7014776.jpg",
+          "alt": "Famiglia con laptop",
+          "width": 1200,
+          "height": 800,
+          "description": "Famiglia che usa il laptop"
+        },
+        {
+          "src": "/assets/hero/pexels-rdne-8499501.jpg",
+          "alt": "Famiglia moderna che studia",
+          "width": 1200,
+          "height": 800,
+          "description": "Famiglia moderna che studia"
+        },
+        {
+          "src": "/assets/hero/pexels-rdne-8499534.jpg",
+          "alt": "Famiglia moderna con laptop",
+          "width": 1200,
+          "height": 800,
+          "description": "Famiglia moderna con laptop"
+        },
+        {
+          "src": "/assets/hero/pexels-rdne-8500310.jpg",
+          "alt": "Famiglia concentrata",
+          "width": 1200,
+          "height": 800,
+          "description": "Famiglia concentrata nello studio"
+        },
+        {
+          "src": "/assets/hero/pexels-rdne-8500356.jpg",
+          "alt": "Famiglia felice",
+          "width": 1200,
+          "height": 800,
+          "description": "Famiglia felice che studia"
+        }
+      ]
+    },
+    "mobile": {
+      "modern": [
+        {
+          "src": "/assets/hero/pexels-max-fischer-5212657.jpg",
+          "alt": "Studente moderno",
+          "width": 400,
+          "height": 300,
+          "description": "Studente moderno e giovane"
+        },
+        {
+          "src": "/assets/hero/pexels-max-fischer-5212687.jpg",
+          "alt": "Studentessa moderna",
+          "width": 400,
+          "height": 300,
+          "description": "Studentessa moderna e giovane"
+        },
+        {
+          "src": "/assets/hero/pexels-max-fischer-5212695.jpg",
+          "alt": "Studente moderno con laptop",
+          "width": 400,
+          "height": 300,
+          "description": "Studente moderno con laptop"
+        },
+        {
+          "src": "/assets/hero/pexels-max-fischer-5212697.jpg",
+          "alt": "Studentessa moderna con laptop",
+          "width": 400,
+          "height": 300,
+          "description": "Studentessa moderna con laptop"
+        },
+        {
+          "src": "/assets/hero/pexels-max-fischer-5212700.jpg",
+          "alt": "Studente concentrato moderno",
+          "width": 400,
+          "height": 300,
+          "description": "Studente concentrato moderno"
+        },
+        {
+          "src": "/assets/hero/pexels-mikhail-nilov-7573223.jpg",
+          "alt": "Studente con cuffie moderno",
+          "width": 400,
+          "height": 300,
+          "description": "Studente con cuffie moderno"
+        },
+        {
+          "src": "/assets/hero/pexels-timur-weber-9127034.jpg",
+          "alt": "Studente moderno",
+          "width": 400,
+          "height": 300,
+          "description": "Studente moderno"
+        },
+        {
+          "src": "/assets/hero/pexels-vanessa-loring-7869245.jpg",
+          "alt": "Studentessa moderna",
+          "width": 400,
+          "height": 300,
+          "description": "Studentessa moderna"
+        }
+      ],
+      "young": [
+        {
+          "src": "/assets/hero/pexels-tima-miroshnichenko-5303581.jpg",
+          "alt": "Studente giovane",
+          "width": 400,
+          "height": 300,
+          "description": "Studente giovane"
+        },
+        {
+          "src": "/assets/hero/pexels-tima-miroshnichenko-6671712.jpg",
+          "alt": "Studentessa giovane",
+          "width": 400,
+          "height": 300,
+          "description": "Studentessa giovane"
+        },
+        {
+          "src": "/assets/hero/pexels-yankrukov-4458337.jpg",
+          "alt": "Studente concentrato",
+          "width": 400,
+          "height": 300,
+          "description": "Studente concentrato"
+        }
+      ]
+    }
+  },
+  "features": {
+    "ai": [
+      {
+        "src": "/assets/features/pexels-shkrabaanthony-5306436.jpg",
+        "alt": "Intelligenza artificiale e tecnologia",
+        "width": 800,
+        "height": 600,
+        "description": "AI e tecnologia avanzata"
+      },
+      {
+        "src": "/assets/features/pexels-shkrabaanthony-6267055.jpg",
+        "alt": "Robotica e AI",
+        "width": 800,
+        "height": 600,
+        "description": "Robotica e intelligenza artificiale"
+      },
+      {
+        "src": "/assets/features/fabio-lucas-YXFvNxrgNAg-unsplash.jpg",
+        "alt": "Robotica avanzata",
+        "width": 800,
+        "height": 600,
+        "description": "Robotica avanzata"
+      },
+      {
+        "src": "/assets/features/kino-vn-6RCMUT2pDVc-unsplash.jpg",
+        "alt": "AI e robotica",
+        "width": 800,
+        "height": 600,
+        "description": "AI e robotica"
+      }
+    ],
+    "technology": [
+      {
+        "src": "/assets/features/pexels-shkrabaanthony-5306412.jpg",
+        "alt": "Tecnologia moderna",
+        "width": 800,
+        "height": 600,
+        "description": "Tecnologia moderna"
+      },
+      {
+        "src": "/assets/features/pexels-shkrabaanthony-5306455.jpg",
+        "alt": "Tecnologia avanzata",
+        "width": 800,
+        "height": 600,
+        "description": "Tecnologia avanzata"
+      },
+      {
+        "src": "/assets/features/pexels-shkrabaanthony-6288092.jpg",
+        "alt": "Tecnologia futura",
+        "width": 800,
+        "height": 600,
+        "description": "Tecnologia futura"
+      },
+      {
+        "src": "/assets/features/pexels-tiger-lily-8260185.jpg",
+        "alt": "Tecnologia del futuro",
+        "width": 800,
+        "height": 600,
+        "description": "Tecnologia del futuro"
+      }
+    ],
+    "clocks": [
+      {
+        "src": "/assets/features/pexels-roman-odintsov-11025029.jpg",
+        "alt": "Orologio minimal che rappresenta il tempo",
+        "width": 400,
+        "height": 300,
+        "description": "Orologio minimal"
+      },
+      {
+        "src": "/assets/features/pexels-ron-lach-9784248.jpg",
+        "alt": "Orologio moderno",
+        "width": 400,
+        "height": 300,
+        "description": "Orologio moderno"
+      }
+    ],
+    "workspace": [
+      {
+        "src": "/assets/features/annie-spratt-4E1JOFK55kc-unsplash.jpg",
+        "alt": "Workspace moderno",
+        "width": 800,
+        "height": 600,
+        "description": "Workspace moderno"
+      },
+      {
+        "src": "/assets/features/bandlab-s2-1-Ezz5Uk-unsplash.jpg",
+        "alt": "Chat AI",
+        "width": 800,
+        "height": 600,
+        "description": "Chat AI"
+      },
+      {
+        "src": "/assets/features/cowomen-hz-6prUpVss-unsplash.jpg",
+        "alt": "Collaborazione",
+        "width": 800,
+        "height": 600,
+        "description": "Collaborazione"
+      },
+      {
+        "src": "/assets/features/stem-t4l--PnSpCHYKsw-unsplash.jpg",
+        "alt": "Tecnologia educativa",
+        "width": 800,
+        "height": 600,
+        "description": "Tecnologia educativa"
+      }
+    ]
+  },
+  "pricing": {
+    "money": [
+      {
+        "src": "/assets/pricing/pexels-august-de-richelieu-4260323.jpg",
+        "alt": "Soldi che rappresentano il risparmio",
+        "width": 600,
+        "height": 400,
+        "description": "Soldi e risparmio"
+      },
+      {
+        "src": "/assets/pricing/pexels-august-de-richelieu-4260475.jpg",
+        "alt": "Soldi",
+        "width": 600,
+        "height": 400,
+        "description": "Soldi"
+      },
+      {
+        "src": "/assets/pricing/pexels-august-de-richelieu-4260479.jpg",
+        "alt": "Soldi",
+        "width": 600,
+        "height": 400,
+        "description": "Soldi"
+      },
+      {
+        "src": "/assets/pricing/pexels-pnw-prod-7577329.jpg",
+        "alt": "Soldi",
+        "width": 600,
+        "height": 400,
+        "description": "Soldi"
+      }
+    ],
+    "coins": [
+      {
+        "src": "/assets/pricing/pexels-august-de-richelieu-4260315.jpg",
+        "alt": "Monete",
+        "width": 600,
+        "height": 400,
+        "description": "Monete"
+      },
+      {
+        "src": "/assets/pricing/pexels-august-de-richelieu-4260325.jpg",
+        "alt": "Monete",
+        "width": 600,
+        "height": 400,
+        "description": "Monete"
+      },
+      {
+        "src": "/assets/pricing/pexels-august-de-richelieu-4260477.jpg",
+        "alt": "Monete",
+        "width": 600,
+        "height": 400,
+        "description": "Monete"
+      }
+    ],
+    "savings": [
+      {
+        "src": "/assets/pricing/pexels-olly-3761512.jpg",
+        "alt": "Salvadanaio",
+        "width": 600,
+        "height": 400,
+        "description": "Salvadanaio"
+      }
+    ]
+  },
+  "parents": {
+    "families": [
+      {
+        "src": "/assets/parents/pexels-amina-filkins-5561157.jpg",
+        "alt": "Famiglia felice",
+        "width": 800,
+        "height": 600,
+        "description": "Famiglia felice"
+      },
+      {
+        "src": "/assets/parents/pexels-julia-m-cameron-4145074.jpg",
+        "alt": "Famiglia",
+        "width": 800,
+        "height": 600,
+        "description": "Famiglia"
+      },
+      {
+        "src": "/assets/parents/pexels-ketut-subiyanto-4474032.jpg",
+        "alt": "Famiglia",
+        "width": 800,
+        "height": 600,
+        "description": "Famiglia"
+      },
+      {
+        "src": "/assets/parents/pexels-kureng-workx-2546437-4314674.jpg",
+        "alt": "Famiglia",
+        "width": 800,
+        "height": 600,
+        "description": "Famiglia"
+      },
+      {
+        "src": "/assets/parents/pexels-mary-taylor-5896684.jpg",
+        "alt": "Famiglia",
+        "width": 800,
+        "height": 600,
+        "description": "Famiglia"
+      },
+      {
+        "src": "/assets/parents/pexels-norma-mortenson-8457713.jpg",
+        "alt": "Famiglia",
+        "width": 800,
+        "height": 600,
+        "description": "Famiglia"
+      }
+    ],
+    "children": [
+      {
+        "src": "/assets/parents/pexels-kampus-6297625.jpg",
+        "alt": "Bambini che studiano",
+        "width": 800,
+        "height": 600,
+        "description": "Bambini che studiano"
+      },
+      {
+        "src": "/assets/parents/pexels-kampus-7414081.jpg",
+        "alt": "Bambini con laptop",
+        "width": 800,
+        "height": 600,
+        "description": "Bambini con laptop"
+      },
+      {
+        "src": "/assets/parents/pexels-jonathanborba-17771091.jpg",
+        "alt": "Bambini",
+        "width": 800,
+        "height": 600,
+        "description": "Bambini"
+      },
+      {
+        "src": "/assets/parents/pexels-marta-wave-6437602.jpg",
+        "alt": "Bambini",
+        "width": 800,
+        "height": 600,
+        "description": "Bambini"
+      },
+      {
+        "src": "/assets/parents/pexels-norma-mortenson-8457288.jpg",
+        "alt": "Bambini",
+        "width": 800,
+        "height": 600,
+        "description": "Bambini"
+      }
+    ]
+  },
+  "backgrounds": {
+    "gradients": [
+      {
+        "src": "/assets/bg/annie-spratt-4E1JOFK55kc-unsplash.jpg",
+        "alt": "Gradiente moderno",
+        "description": "Gradiente moderno per sfondi"
+      },
+      {
+        "src": "/assets/bg/annie-spratt-grk-HjPnzlc-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/eugene-chystiakov-Ha5TZSMLvG4-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/fabio-lucas-YXFvNxrgNAg-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/fran-innocenti-0FZ8EFICYCg-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/hamza-tighza--EQgtTaeNwg-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/ionut-roman-FbEEWiED3wM-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/josefa-ndiaz-IzmdWT2lW5Q-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/kenny-eliason-mqoLpeeYBic-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/kino-vn-6RCMUT2pDVc-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/krisjanis-kazaks-uk4NI2N1Qd0-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/linpaul-rodney-HsLg8U2QFgI-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/louise-viallesoubranne-8GXig2G551M-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/mimi-thian-gicQUPeAsxA-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/mykyta-kravcenko-j3PUmGzYnAQ-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/nikita-katsevich-AzTS6b_cgHE-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/patricia-prudente-qESmLLXAmWs-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/ron-sinda-RoHE_uWWeAA-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/rylan-hill-ts2IObtxlwI-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/sanket-mishra-uA8_uSOxFt4-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/stem-t4l--PnSpCHYKsw-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/ux-indonesia-5QiGvmyJTsc-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/vadim-bogulov-J_T9RyiWk4E-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/van-tay-media-pc_HmXZ0e_w-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/vardan-papikyan-Sh1cdGk5eyY-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      },
+      {
+        "src": "/assets/bg/windows-GDl2tmIxixU-unsplash.jpg",
+        "alt": "Gradiente",
+        "description": "Gradiente per sfondi"
+      }
+    ]
+  }
+}
