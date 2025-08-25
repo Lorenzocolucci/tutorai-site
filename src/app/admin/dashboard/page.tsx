@@ -4,7 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import { db } from '@/utils/firebase';
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy, doc, updateDoc } from 'firebase/firestore';
 
 // Interfaccia per tipizzare i dati delle richieste
 interface BetaRequest {
@@ -36,12 +36,12 @@ const AdminDashboard = () => {
       const password = prompt("Inserisci la password di accesso per l'admin:");
       if (password === "TutorAIAdmin2025") { // Password temporanea, da cambiare!
         setIsAuthenticated(true);
-      } else {
+      } else if (password !== null) { // Solo se l'utente ha inserito qualcosa
         alert("Password errata.");
         window.location.href = '/'; // Reindirizza se la password è sbagliata
       }
     }
-  }, [isAuthenticated]);
+  }, []); // Rimuoviamo isAuthenticated dalle dipendenze
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -63,6 +63,50 @@ const AdminDashboard = () => {
     // Pulisce il listener quando il componente viene smontato
     return () => unsubscribe();
   }, [isAuthenticated]);
+
+  // Funzione per aggiornare lo status di una richiesta
+  const updateRequestStatus = async (requestId: string, newStatus: string) => {
+    try {
+      const requestRef = doc(db, 'betaRequests', requestId);
+      await updateDoc(requestRef, {
+        status: newStatus,
+        respondedAt: new Date()
+      });
+    } catch (error) {
+      console.error('Errore nell\'aggiornamento dello status:', error);
+      alert('Errore nell\'aggiornamento dello status');
+    }
+  };
+
+  // Funzione per inviare email di risposta
+  const sendResponseEmail = (email: string, status: string) => {
+    const subject = status === 'approved' 
+      ? 'TutorAI - La tua richiesta Beta è stata approvata! 🎉'
+      : 'TutorAI - Informazioni sulla tua richiesta Beta';
+    
+    const body = status === 'approved'
+      ? `Ciao!
+
+Siamo felici di informarti che la tua richiesta di accesso alla Beta di TutorAI è stata APPROVATA! 🎉
+
+Nei prossimi giorni riceverai un'email con le credenziali di accesso e le istruzioni per iniziare.
+
+Grazie per il tuo interesse in TutorAI!
+
+Il Team TutorAI`
+      : `Ciao!
+
+Grazie per il tuo interesse in TutorAI!
+
+Al momento la tua richiesta di accesso alla Beta è in fase di valutazione. Ti contatteremo presto con ulteriori informazioni.
+
+Nel frattempo, puoi seguire i nostri aggiornamenti sui social media.
+
+Il Team TutorAI`;
+
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoLink);
+  };
 
   if (!isAuthenticated) {
     return <div className="min-h-screen bg-gray-100 flex items-center justify-center"><p>Accesso non autorizzato.</p></div>;
@@ -102,6 +146,7 @@ const AdminDashboard = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Curriculum / Classe</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Materie</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Azioni</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -142,11 +187,42 @@ const AdminDashboard = () => {
                             : req.status === 'approved'
                             ? 'bg-green-100 text-green-800'
                             : 'bg-red-100 text-red-800'
-                        }`}>
-                          {req.status === 'pending' ? 'In attesa' : req.status === 'approved' ? 'Approvata' : 'Rifiutata'}
-                        </span>
-                      </td>
-                    </tr>
+                                                 }`}>
+                           {req.status === 'pending' ? 'In attesa' : req.status === 'approved' ? 'Approvata' : 'Rifiutata'}
+                         </span>
+                       </td>
+                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                         <div className="flex gap-2">
+                           {req.status === 'pending' && (
+                             <>
+                               <button
+                                 onClick={() => {
+                                   updateRequestStatus(req.id, 'approved');
+                                   sendResponseEmail(req.email, 'approved');
+                                 }}
+                                 className="bg-green-600 text-white px-3 py-1 rounded text-xs hover:bg-green-700 transition-colors"
+                               >
+                                 Approva
+                               </button>
+                               <button
+                                 onClick={() => {
+                                   updateRequestStatus(req.id, 'rejected');
+                                   sendResponseEmail(req.email, 'rejected');
+                                 }}
+                                 className="bg-red-600 text-white px-3 py-1 rounded text-xs hover:bg-red-700 transition-colors"
+                               >
+                                 Rifiuta
+                               </button>
+                             </>
+                           )}
+                           {req.status !== 'pending' && (
+                             <span className="text-xs text-gray-400">
+                               {req.status === 'approved' ? '✅ Approvata' : '❌ Rifiutata'}
+                             </span>
+                           )}
+                         </div>
+                       </td>
+                     </tr>
                   ))}
                 </tbody>
               </table>

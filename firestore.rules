@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // PERMESSO TEMPORANEO PER TEST - DA CAMBIARE IN PRODUZIONE!
+    match /{document=**} {
+      allow read, write: if true;
+    }
+    
+    // REGOLE PIÙ SICURE PER PRODUZIONE (da usare dopo):
+    // match /betaRequests/{requestId} {
+    //   allow read, write: if true; // Per ora permettiamo tutto
+    // }
+  }
+}
