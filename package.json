@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-three/drei": "^9.102.6",
     "@react-three/fiber": "^8.15.19",
+    "firebase": "^12.1.0",
     "next": "14.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",

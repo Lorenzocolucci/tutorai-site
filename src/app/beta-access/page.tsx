@@ -6,6 +6,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
+// NUOVI IMPORT PER FIREBASE
+import { db } from '@/utils/firebase';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+
 // Dati completi per i dropdown
 const curriculaData = {
   italia: [
@@ -110,15 +114,47 @@ const BetaAccessPage = () => {
     }));
   };
 
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simula invio
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    setError('');
+
+    // Validazione semplice per assicurarsi che i campi principali non siano vuoti
+    if (!formData.nome || !formData.cognome || !formData.email || !formData.curriculum || !formData.classe) {
+      setError('Per favore, compila tutti i campi obbligatori.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      // Creiamo un riferimento a un nuovo documento nella collezione 'betaRequests'.
+      // Usiamo l'email come ID del documento per evitare richieste duplicate.
+      const requestDocRef = doc(db, 'betaRequests', formData.email);
+
+      // Salviamo i dati del form nel documento.
+      await setDoc(requestDocRef, {
+        nome: formData.nome,
+        cognome: formData.cognome,
+        email: formData.email,
+        sistemaScolastico: formData.sistemaScolastico,
+        curriculum: formData.curriculum,
+        classe: formData.classe,
+        materie: formData.materie,
+        motivazione: formData.motivazione,
+        requestedAt: serverTimestamp(), // Aggiunge un timestamp del server
+        status: 'pending' // Stato iniziale della richiesta
+      });
+      
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+
+    } catch (err) {
+      console.error("Errore durante il salvataggio su Firestore: ", err);
+      setError("Si è verificato un errore durante l'invio della richiesta. Riprova più tardi.");
+      setIsSubmitting(false);
+    }
   };
 
   // Funzioni per navigare tra gli step
@@ -319,6 +355,13 @@ const BetaAccessPage = () => {
                         className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                       />
                     </div>
+                    {/* Messaggio di errore */}
+                    {error && (
+                      <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+                        <p className="text-red-600 text-sm">{error}</p>
+                      </div>
+                    )}
+                    
                     <div className="flex gap-4 mt-6">
                       <button onClick={prevStep} type="button" className="w-1/3 bg-gray-200 text-gray-700 py-4 rounded-xl font-semibold hover:bg-gray-300 transition-colors">
                         ← Indietro
