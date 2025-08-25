@@ -5,7 +5,7 @@ import Link from 'next/link';
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 
 // Componente per i Dati Strutturati della pagina FAQ
-const FaqPageStructuredData = ({ faqData }) => {
+const FaqPageStructuredData = ({ faqData }: any) => {
     const questions = Object.values(faqData).flat().map((item: any) => ({
         "@type": "Question",
         "name": item.question,
