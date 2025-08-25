@@ -11,9 +11,38 @@ import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 
+// NUOVO COMPONENTE PER I DATI STRUTTURATI
+const HomePageStructuredData = () => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TutorAI",
+    "url": "https://www.mytutorai.app", // SOSTITUISCI CON IL TUO DOMINIO FINALE
+    "logo": "https://www.mytutorai.app/assets/logo.png", // CREA E CARICA UN LOGO QUI
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "info@mytutorai.app",
+      "contactType": "Customer Service"
+    },
+    "sameAs": [
+      // INSERISCI QUI I LINK AI TUOI PROFILI SOCIAL
+      // "https://twitter.com/tutorai",
+      // "https://www.linkedin.com/company/tutorai"
+    ]
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+};
+
 export default function Home() {
   return (
     <>
+      <HomePageStructuredData />
       <Hero />
       <AnimateOnScroll><Features /></AnimateOnScroll>
       <AnimateOnScroll><AcademicPath /></AnimateOnScroll>

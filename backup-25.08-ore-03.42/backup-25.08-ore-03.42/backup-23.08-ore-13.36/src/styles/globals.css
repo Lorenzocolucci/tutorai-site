@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Gradiente animato per la Hero Section */
+.animated-gradient {
+  background: linear-gradient(135deg, #667eea, #764ba2, #8b5cf6);
+  background-size: 200% 200%;
+  animation: gradient-animation 15s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animazioni per il Modal */
+@keyframes fade-in-scale {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animazioni per hover e interazioni */
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px rgba(90, 103, 216, 0.3); 
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(90, 103, 216, 0.6); 
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Animazioni globali per le sezioni */
+.section-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.section-animate.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

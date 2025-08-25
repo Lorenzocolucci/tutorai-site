@@ -1,0 +1,133 @@
+{
+  "projectInfo": {
+    "name": "TutorAI Website Relaunch",
+    "objective": "Trasformare mytutorai.app in un 'top sito mondiale per educational AI', ispirato allo stile visivo e interattivo di warmwind.space, massimizzando la conversione degli utenti alla registrazione per la Beta.",
+    "lastUpdate": "2025-08-25T03:25:00Z"
+  },
+  "projectState": {
+    "status": "Advanced Development & Final Refinements",
+    "summary": "Il sito ha una base architetturale e stilistica solida e completa. Le sezioni principali sono state implementate con un'identità visiva premium (animazioni 3D, micro-interazioni). Le pagine del funnel di conversione (beta-access, login) e le pagine legali/informative (FAQ, Chi Siamo) sono state create e successivamente raffinate. L'ottimizzazione SEO tecnica (sitemap, robots, schema.org) è stata completata. Il focus attuale è sulla finalizzazione della user experience, con particolare attenzione alla sezione Hero, e sulla pianificazione delle task rimanenti (multilingua)."
+  },
+  "designSystem": {
+    "palette": {
+      "primary": "#5A67D8 (Blu Intelligenza)",
+      "secondary": "#8B5CF6 (Viola Creatività)",
+      "background": "#FFFFFF (Bianco Neve)",
+      "surface": "#F7FAFC (Bianco Ghiaccio)",
+      "darkSurface": "#0f172a (bg-slate-900)",
+      "textPrimary": "#1A202C (Nero Profondo)",
+      "textSecondary": "#718096 (Grigio Ardesia)",
+      "success": "#38A169 (Verde Speranza)"
+    },
+    "typography": {
+      "mainFont": "Inter (sans-serif)"
+    },
+    "keyVisualElements": [
+      "card-oblique: Effetto 3D prospettico sulle card all'hover.",
+      "glowing-border/glowing-border-follow: Bordi luminosi e animati che reagiscono al mouse.",
+      "section-animate: Animazione di entrata fluida per le sezioni allo scroll.",
+      "Cervello AI Interattivo: Elemento 3D centrale nella Hero section, con nucleo, interconnessioni e neuroni animati, che ruota automaticamente."
+    ]
+  },
+  "technicalStack": {
+    "framework": "Next.js 14 (App Router)",
+    "language": "TypeScript/JavaScript (TSX/JSX)",
+    "styling": "Tailwind CSS con file CSS globali per animazioni complesse.",
+    "3dGraphics": "Three.js, React Three Fiber (@react-three/fiber), Drei (@react-three/drei)"
+  },
+  "fileStructure": {
+    "description": "Struttura ad albero completa del progetto, con descrizione di ogni file e cartella rilevante.",
+    "/public": {
+      "/assets": "Contiene tutte le immagini (hero, features, chi-siamo) e le icone."
+    },
+    "/src": {
+      "/app": {
+        "/layout.tsx": "Root layout, importa il font Inter e gli stili globali.",
+        "/robots.ts": {
+          "status": "NEW",
+          "description": "Definisce le regole per i crawler, escludendo le pagine del funnel beta."
+        },
+        "/sitemap.ts": {
+          "status": "NEW",
+          "description": "Genera dinamicamente la mappa del sito per i motori di ricerca."
+        },
+        "/(site)": {
+          "description": "Route group per le pagine pubbliche del sito.",
+          "/layout.tsx": "Layout per le pagine del sito, include il CookieBanner.",
+          "/page.tsx": "Homepage, assembla tutte le sezioni principali.",
+          "/chi-siamo/page.tsx": "Pagina 'Chi Siamo' con storytelling visivo e narrativo.",
+          "/faq/page.tsx": "Pagina FAQ completa, con categorie, ricerca e accordion interattivo."
+        },
+        "/beta-access/page.tsx": "Pagina di richiesta accesso beta, ottimizzata con un'esperienza a 3 step e social proof.",
+        "/beta-login/page.tsx": "Pagina di login per gli utenti beta.",
+        "/beta-dashboard/page.tsx": "Bozza di dashboard per i beta tester."
+      },
+      "/components": {
+        "/layout": {
+          "Header.jsx": "Componente Header, navigazione principale e CTA.",
+          "Footer.jsx": "Componente Footer, con link, social e contatti."
+        },
+        "/sections": {
+          "Hero.jsx": "Componente Hero. Implementazione finale con background 3D ('Cervello AI'), sfondo scuro e testo dinamico per massima leggibilità e impatto.",
+          "Features.jsx": "Sezione funzionalità con Bento Grid e card interattive.",
+          "AboutUs.jsx": "Componente 'teaser' per la homepage.",
+          "... (altri componenti sezione)": "AcademicPath, ROI, Curricula, Testimonials, FAQ (teaser), Blog (teaser)."
+        },
+        "/ui": {
+          "Button.jsx": "Componente bottone riutilizzabile.",
+          "Modal.jsx": "Componente modale generico.",
+          "AnimateOnScroll.jsx": "Wrapper per le animazioni di entrata allo scroll.",
+          "CognitiveCore.jsx": {
+            "status": "NEW_AND_ITERATED",
+            "description": "Componente che renderizza la scena 3D del 'Cervello AI Interattivo', ottimizzato per performance e usabilità (rotazione automatica, no zoom-on-scroll)."
+          }
+        }
+      },
+      "/styles": {
+        "globals.css": "Stili globali e animazioni custom (`glowing-card`, `card-oblique`, etc.).",
+        "animations.css": "Stili per animazioni specifiche come il gradiente della Hero iniziale (ora deprecato)."
+      }
+    }
+  },
+  "keyDecisionsAndImplementations": [
+    {
+      "area": "Hero Section",
+      "decision": "Completa riprogettazione in 3 fasi: 1) Sostituzione dell'immagine stock e del gradiente con uno sfondo scuro e visual astratti. 2) Introduzione di un'animazione 3D 'Nucleo Cognitivo' astratta che ha causato bug di visualizzazione. 3) Implementazione finale di un 'Cervello AI Interattivo' 3D, disaccoppiato dallo scroll, su sfondo scuro per risolvere tutti i problemi di leggibilità, usabilità e impatto visivo."
+    },
+    {
+      "area": "Funnel di Conversione",
+      "decision": "La pagina /beta-access è stata evoluta da un lungo form statico a un'esperienza guidata a 3 step per ridurre il carico cognitivo e aumentare la conversione, aggiungendo elementi di social proof (testimonial)."
+    },
+    {
+      "area": "Pagina FAQ",
+      "decision": "Trasformazione da una lista statica di testo a un accordion interattivo, migliorando drasticamente l'usabilità e allineando l'esperienza a quella del teaser sulla homepage."
+    },
+    {
+      "area": "SEO Tecnica & Compliance",
+      "decision": "Implementazione di `robots.ts`, `sitemap.ts`, `Schema.org` (Organization, FAQPage) e un `CookieBanner.tsx` conforme al GDPR per garantire la massima visibilità, indicizzazione e conformità legale."
+    }
+  ],
+  "outstandingTasks": [
+    {
+      "id": 1,
+      "area": "Internazionalizzazione",
+      "title": "Implementazione completa della versione Inglese (EN)",
+      "description": "La struttura è predisposta (routing in sitemap.ts, link nel footer), ma i contenuti testuali di ogni componente e pagina devono essere tradotti e gestiti tramite un sistema di internazionalizzazione (i18n), probabilmente tramite file JSON dedicati per ogni lingua. Successivamente si potranno valutare altre lingue.",
+      "priority": "High"
+    },
+    {
+      "id": 2,
+      "area": "Contenuti",
+      "title": "Sviluppo della sezione Blog completa",
+      "description": "Attualmente esiste solo un teaser sulla homepage. È necessario creare il layout per la pagina principale del blog (elenco articoli) e per la pagina del singolo articolo, con una strategia di caricamento dei contenuti (es. file MDX o CMS headless).",
+      "priority": "Medium"
+    },
+    {
+      "id": 3,
+      "area": "Performance",
+      "title": "Audit finale delle performance e ottimizzazione immagini",
+      "description": "Verificare i Core Web Vitals (LCP, FID, CLS) con strumenti come PageSpeed Insights e ottimizzare il caricamento di tutte le immagini del sito (formato WebP, dimensioni corrette) una volta che i contenuti saranno definitivi.",
+      "priority": "Medium"
+    }
+  ]
+}

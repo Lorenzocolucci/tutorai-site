@@ -2,10 +2,58 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
+
+// Componente per i Dati Strutturati della pagina FAQ
+const FaqPageStructuredData = ({ faqData }) => {
+    const questions = Object.values(faqData).flat().map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": item.answer
+        }
+    }));
+
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": questions
+    };
+
+    return (
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+    );
+};
+
+// Sub-componente per l'accordion
+const FaqItem = ({ faq, isOpen, onClick }) => (
+  <div className="perspective-container">
+    <div className="card-oblique glowing-border-follow border-b border-gray-200 py-1 transition-all duration-300">
+      <button onClick={onClick} className="w-full text-left flex justify-between items-center p-6 text-lg text-gray-900">
+        <span className="font-semibold">{faq.question}</span>
+        <span className="ml-6 h-7 flex items-center">
+          <svg className={`h-6 w-6 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+      </button>
+      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
+        <div className="px-6 pb-6 text-base text-gray-700 prose">
+          <p>{faq.answer}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 const FAQPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('tutti');
+  const [openIndex, setOpenIndex] = useState(null);
 
   const faqData = {
     generale: [
@@ -84,10 +132,15 @@ const FAQPage = () => {
       )
     );
 
+  const handleToggle = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
     <div className="bg-white min-h-screen">
+      <FaqPageStructuredData faqData={faqData} />
       {/* Header */}
-      <div className="bg-gradient-to-r from-primary to-purple-600 text-white py-16">
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
         <div className="container mx-auto px-6 text-center">
           <Link href="/" className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-4">
             ← Torna alla Home
@@ -100,75 +153,76 @@ const FAQPage = () => {
       </div>
 
       <div className="container mx-auto px-6 py-16 max-w-4xl">
-        {/* Barra di ricerca */}
-        <div className="mb-8">
-          <input
-            type="text"
-            placeholder="Cerca nelle FAQ..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-          />
-        </div>
-
-        {/* Categorie */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {categories.map(category => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                activeCategory === category.id
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
-        </div>
-
-        {/* FAQ */}
-        <div className="space-y-6">
-          {filteredFAQs.length > 0 ? (
-            filteredFAQs.map((faq, index) => (
-              <div key={index} className="perspective-container">
-                <div className="card-oblique glowing-border bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                    {faq.question}
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">
-                Nessuna FAQ trovata per "{searchTerm}". Prova a cercare con termini diversi.
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Contatti */}
-        <div className="mt-16 text-center bg-gray-50 rounded-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Non hai trovato quello che cercavi?
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Il nostro team è qui per aiutarti. Contattaci e ti risponderemo entro 24 ore.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors">
-              Contattaci
-            </button>
-            <Link href="/beta-access" className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
-              Richiedi Accesso Beta
-            </Link>
+        <AnimateOnScroll>
+          {/* Barra di ricerca */}
+          <div className="mb-8">
+            <input
+              type="text"
+              placeholder="Cerca nelle FAQ..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
           </div>
-        </div>
+
+          {/* Categorie */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {categories.map(category => (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  activeCategory === category.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {category.name}
+              </button>
+            ))}
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll>
+          <div className="space-y-4 mt-8">
+            {filteredFAQs.length > 0 ? (
+              filteredFAQs.map((faq, index) => (
+                <FaqItem
+                  key={index}
+                  faq={faq}
+                  isOpen={openIndex === index}
+                  onClick={() => handleToggle(index)}
+                />
+              ))
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-gray-500 text-lg">
+                  Nessuna FAQ trovata per "{searchTerm}". Prova a cercare con termini diversi.
+                </p>
+              </div>
+            )}
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll>
+          {/* Contatti */}
+          <div className="mt-16 text-center bg-gray-50 rounded-lg p-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Non hai trovato quello che cercavi?
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Il nostro team è qui per aiutarti. Contattaci e ti risponderemo entro 24 ore.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/contatti" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                Contattaci
+              </Link>
+              <Link href="/beta-access" className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors">
+                Richiedi Accesso Beta
+              </Link>
+            </div>
+          </div>
+        </AnimateOnScroll>
       </div>
     </div>
   );

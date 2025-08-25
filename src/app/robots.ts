@@ -1,11 +1,20 @@
-import type { MetadataRoute } from 'next'
+// src/app/robots.ts
+
+import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = 'https://www.mytutorai.app'; // SOSTITUISCI CON IL TUO DOMINIO FINALE
+
   return {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: [
+        '/beta-access/',
+        '/beta-login/',
+        '/beta-dashboard/',
+      ],
     },
-    sitemap: 'https://mytutorai.app/sitemap.xml',
-  }
+    sitemap: `${baseUrl}/sitemap.xml`,
+  };
 }

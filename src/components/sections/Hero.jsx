@@ -1,70 +1,77 @@
-'use client'; // Necessario per l'animazione del testo
+// src/components/sections/Hero.jsx
+
+'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import Button from '@/components/ui/Button';
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 
-const Hero = () => {
-  const [rotatingText, setRotatingText] = useState("Cambia il tutor, non te stesso.");
-  const rotatingTexts = [
-    "Cambia il tutor, non te stesso.",
-    "Un'IA che si adatta alla TUA mente.",
-    "Apprendimento personale, per tutti.",
-  ];
+// Lazy load del componente 3D
+const CognitiveCore = dynamic(
+  () => import('@/components/ui/CognitiveCore').then(mod => mod.default),
+  {
+    ssr: false,
+    loading: () => <div className="absolute inset-0 z-0 bg-slate-900" />,
+  }
+);
+
+// Componente per il testo animato che cambia
+const AnimatedHeadline = ({ phrases }) => {
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const currentIndex = rotatingTexts.indexOf(rotatingText);
-      const nextIndex = (currentIndex + 1) % rotatingTexts.length;
-      setRotatingText(rotatingTexts[nextIndex]);
-    }, 3000); // Cambia ogni 3 secondi
-    return () => clearInterval(interval);
-  }, [rotatingText, rotatingTexts]);
+    const timer = setInterval(() => {
+      setIndex(prevIndex => (prevIndex + 1) % phrases.length);
+    }, 3000); // Cambia frase ogni 3 secondi
+    return () => clearInterval(timer);
+  }, [phrases.length]);
 
   return (
-    <section id="home" className="relative w-full min-h-screen flex items-center animated-gradient text-white">
-      <div className="container mx-auto px-6 py-24 text-center lg:text-left max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Colonna Testo */}
-          <div className="flex flex-col gap-6">
-            <h1 className="text-4xl md:text-6xl font-bold !leading-tight">
-              Non cambiare il tuo modo di imparare.
-            </h1>
-            <p className="text-2xl md:text-3xl font-medium text-purple-200 h-10 transition-opacity duration-500">
-              {rotatingText}
-            </p>
-            <p className="text-lg text-slate-200 max-w-xl mx-auto lg:mx-0">
-              TutorAI è il primo tutor intelligente che si adatta al tuo stile cognitivo. Dimentica le ore di studio inefficaci. Inizia un percorso di apprendimento personalizzato che funziona davvero per te.
-            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 mt-4 justify-center lg:justify-start">
-                  <Button href="/beta-access" className="flex items-center justify-center gap-2 text-lg">
-                    🚀 Richiedi Accesso Beta
-                  </Button>
-                  <Button href="#demo" variant="outline" className="text-lg !border-white !text-white hover:!bg-white hover:!text-primary">
-                    ▶ Guarda la demo (2 min)
-                  </Button>
-                </div>
-            <p className="mt-4 text-sm text-slate-300">
-              ✨ Già scelto da studenti in 15 paesi. Accesso Beta limitato.
-            </p>
-          </div>
+    <span className="text-purple-300 transition-opacity duration-500">
+      {phrases[index]}
+    </span>
+  );
+};
 
-          {/* Colonna Immagine */}
-          <div className="hidden lg:flex justify-center">
-            <div className="perspective-container">
-              <div className="card-oblique glowing-border-follow relative w-full max-w-md h-auto">
-                <Image
-                    src="/assets/hero/pexels-cottonbro-6986442.jpg"
-                    alt="Famiglia che studia insieme"
-                    width={500}
-                    height={500}
-                    priority // Fondamentale per il LCP
-                    className="rounded-2xl shadow-2xl object-cover aspect-square"
-                />
-              </div>
-            </div>
+const Hero = () => {
+  const rotatingPhrases = [
+    "Cambia il tutor.",
+    "Scopri il tuo potenziale.",
+    "Impara al tuo ritmo.",
+  ];
+
+  return (
+    // CORREZIONE 1: Ripristinato lo sfondo scuro e l'altezza a schermo intero
+    <section id="home" className="relative w-full h-screen flex items-center justify-center bg-slate-900 text-white overflow-hidden">
+      {/* CORREZIONE 2: L'animazione è ora un elemento di sfondo non interattivo */}
+      <div className="absolute inset-0 z-0 opacity-70" style={{ pointerEvents: 'none' }}>
+        <CognitiveCore />
+      </div>
+      
+      <div className="container mx-auto px-6 text-center relative z-10">
+        <AnimateOnScroll className="flex flex-col items-center">
+          <h1 className="text-4xl md:text-6xl font-bold !leading-tight max-w-4xl">
+            Non cambiare il tuo modo di imparare.
+            <br />
+            {/* CORREZIONE 3: Reintrodotto il testo dinamico */}
+            <AnimatedHeadline phrases={rotatingPhrases} />
+          </h1>
+          
+          <p className="text-lg text-slate-300 max-w-2xl mx-auto mt-6">
+            TutorAI è il primo tutor intelligente che si adatta al tuo stile cognitivo. Dimentica le ore di studio inefficaci. Inizia un percorso di apprendimento personalizzato che funziona davvero per te.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
+            <Button href="/beta-access" variant="secondary" className="text-lg flex items-center justify-center gap-2">
+              🚀 Richiedi Accesso Beta
+            </Button>
+            <Button href="#features" variant="outline" className="text-lg !border-white !text-white hover:!bg-white hover:!text-primary">
+              Scopri le funzionalità
+            </Button>
           </div>
-        </div>
+          <p className="mt-4 text-sm text-slate-400">✨ Accesso Beta a posti limitati.</p>
+        </AnimateOnScroll>
       </div>
     </section>
   );

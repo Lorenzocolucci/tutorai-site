@@ -222,6 +222,85 @@
 /* 				Bordi Luminosi e Gradienti 			  */
 /* ---------------------------------------------- */
 
+/* Animazioni per le schede Features con rotazione obliqua */
+.feature-card {
+  opacity: 0;
+  transform: translateY(50px) rotate(25deg);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center bottom;
+}
+
+.feature-card.animate-in {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg);
+}
+
+/* Animazioni progressive per le schede */
+.feature-card-delay-0 { transition-delay: 0ms; }
+.feature-card-delay-100 { transition-delay: 100ms; }
+.feature-card-delay-200 { transition-delay: 200ms; }
+.feature-card-delay-300 { transition-delay: 300ms; }
+.feature-card-delay-400 { transition-delay: 400ms; }
+.feature-card-delay-500 { transition-delay: 500ms; }
+
+/* Effetto di entrata con bounce leggero */
+.feature-card.animate-in {
+  animation: card-bounce-in 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes card-bounce-in {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) rotate(25deg) scale(0.8);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateY(-10px) rotate(5deg) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+/* Hover effects migliorati per le schede */
+.glowing-card-container {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.glowing-card-container:hover {
+  transform: translateY(-12px) rotate(2deg) scale(1.03);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* Effetto di profondità 3D al hover */
+.glowing-card-container:hover .glowing-card-mask {
+  transform: translateZ(20px);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Effetto di brillantezza per le schede */
+.glowing-card-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.glowing-card-container:hover::after {
+  left: 100%;
+}
+
 /* ---------------------------------------------- */
 /* 			Effetti Avanzati per Grafico ROI 	  */
 /* ---------------------------------------------- */

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Modal from '@/components/ui/Modal';
 
@@ -13,8 +13,36 @@ const featuresData = [
   { icon: '❤️‍🔥', title: 'Motivazione Costante', description: 'Ti supporta nei momenti di difficoltà, celebra i tuoi successi e ti aiuta a non mollare mai.', imageUrl: '/assets/features/bandlab-s2-1-Ezz5Uk-unsplash.jpg', alt: 'Studente che riceve un feedback positivo e alza il pugno in segno di successo.', detailedDescription: ( <> <p className="mb-4">L'apprendimento è un viaggio emotivo. TutorAI non è solo un tutor, ma un vero compagno che ti accompagna in ogni passo.</p> <ul className="list-disc list-inside space-y-2"> <li><strong>Celebrazione dei Successi:</strong> Ogni piccolo traguardo viene riconosciuto e celebrato per mantenere alta la motivazione.</li> <li><strong>Supporto nei Momenti Difficili:</strong> Quando sei bloccato, ricevi incoraggiamento e strategie per superare l'ostacolo.</li> <li><strong>Messaggi Motivazionali:</strong> Citazioni, storie di successo e messaggi personalizzati per mantenere viva la passione per l'apprendimento.</li> </ul> <p className="mt-4 font-semibold">Perché il miglior tutor è quello che crede in te più di quanto tu creda in te stesso.</p> </> ) }
 ];
 
-// Sub-componente per la card con effetto bordo luminoso
-const GlowingFeatureCard = ({ feature, onClick, className = "" }) => {
+// Hook per animazioni di entrata
+const useInView = (options = {}) => {
+  const [isInView, setIsInView] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsInView(true);
+        observer.unobserve(entry.target);
+      }
+    }, { threshold: 0.1, ...options });
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [options]);
+
+  return [ref, isInView];
+};
+
+// Sub-componente per la card con animazioni oblique
+const FeatureCard = ({ feature, onClick, className = "", delay = 0 }) => {
+  const [ref, isInView] = useInView();
   const cardRef = useRef(null);
 
   const handleMouseMove = (e) => {
@@ -26,22 +54,32 @@ const GlowingFeatureCard = ({ feature, onClick, className = "" }) => {
 
   return (
     <div
-      ref={cardRef}
-      className={`glowing-card-container ${className}`}
-      onMouseMove={handleMouseMove}
-      onClick={onClick}
+      ref={ref}
+      className={`feature-card ${className} ${isInView ? 'animate-in' : ''}`}
+      style={{ 
+        transitionDelay: `${delay}ms`,
+        transform: isInView ? 'translateY(0) rotate(0deg)' : 'translateY(50px) rotate(25deg)',
+        opacity: isInView ? 1 : 0
+      }}
     >
-      <div className="glowing-card-mask bg-white cursor-pointer h-full">
-        <div className="rounded-3xl overflow-hidden h-full flex flex-col">
-          <div className="relative w-full h-48">
-            <Image src={feature.imageUrl} alt={feature.alt} fill className="object-cover" />
-          </div>
-          <div className="p-8 flex flex-col flex-grow">
-            <h3 className="text-2xl font-bold text-text-primary flex items-center gap-3">
-              <span className="text-3xl">{feature.icon}</span>
-              {feature.title}
-            </h3>
-            <p className="mt-4 text-text-secondary flex-grow">{feature.description}</p>
+      <div
+        ref={cardRef}
+        className="glowing-card-container h-full"
+        onMouseMove={handleMouseMove}
+        onClick={onClick}
+      >
+        <div className="glowing-card-mask bg-white cursor-pointer h-full">
+          <div className="rounded-3xl overflow-hidden h-full flex flex-col">
+            <div className="relative w-full h-48">
+              <Image src={feature.imageUrl} alt={feature.alt} fill className="object-cover" />
+            </div>
+            <div className="p-8 flex flex-col flex-grow">
+              <h3 className="text-2xl font-bold text-text-primary flex items-center gap-3">
+                <span className="text-3xl">{feature.icon}</span>
+                {feature.title}
+              </h3>
+              <p className="mt-4 text-text-secondary flex-grow">{feature.description}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -61,16 +99,45 @@ const Features = () => {
             <p className="mt-4 text-lg text-text-secondary max-w-3xl mx-auto">Sei funzionalità rivoluzionarie che sostituiscono le ripetizioni tradizionali con un metodo più intelligente, personale ed efficace.</p>
           </div>
           
-          {/* BENTO GRID */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Layout con larghezze diverse ma altezze uguali */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Prima Card Grande */}
-            <GlowingFeatureCard feature={featuresData[0]} onClick={() => setSelectedFeature(featuresData[0])} className="lg:col-span-2" />
+            <FeatureCard 
+              feature={featuresData[0]} 
+              onClick={() => setSelectedFeature(featuresData[0])} 
+              className="md:col-span-2" 
+              delay={0}
+            />
             {/* Seconda Card */}
-            <GlowingFeatureCard feature={featuresData[1]} onClick={() => setSelectedFeature(featuresData[1])} />
-            {/* Altre 4 Card */}
-            {featuresData.slice(2).map(feature => (
-              <GlowingFeatureCard key={feature.title} feature={feature} onClick={() => setSelectedFeature(feature)} />
-            ))}
+            <FeatureCard 
+              feature={featuresData[1]} 
+              onClick={() => setSelectedFeature(featuresData[1])} 
+              delay={100}
+            />
+            {/* Terza Card */}
+            <FeatureCard 
+              feature={featuresData[2]} 
+              onClick={() => setSelectedFeature(featuresData[2])} 
+              delay={200}
+            />
+            {/* Quarta Card */}
+            <FeatureCard 
+              feature={featuresData[3]} 
+              onClick={() => setSelectedFeature(featuresData[3])} 
+              delay={300}
+            />
+            {/* Quinta Card */}
+            <FeatureCard 
+              feature={featuresData[4]} 
+              onClick={() => setSelectedFeature(featuresData[4])} 
+              delay={400}
+            />
+            {/* Sesta Card */}
+            <FeatureCard 
+              feature={featuresData[5]} 
+              onClick={() => setSelectedFeature(featuresData[5])} 
+              delay={500}
+            />
           </div>
         </div>
       </section>
