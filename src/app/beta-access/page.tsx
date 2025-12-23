@@ -6,9 +6,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-// NUOVI IMPORT PER FIREBASE
-import { db } from '@/utils/firebase';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { BACKEND_API_URL } from '@/lib/supabase';
 
 // Dati completi per i dropdown
 const curriculaData = {
@@ -37,7 +35,1017 @@ const curriculaData = {
   ]
 };
 
-const subjects = [
+// Materie specifiche per ogni curriculum e classe
+const subjectsByCurriculum = {
+  // Liceo Classico
+  'liceo-classico': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'greco', name: 'Greco', icon: '🏛️' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quarta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'greco', name: 'Greco', icon: '🏛️' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quinta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'greco', name: 'Greco', icon: '🏛️' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  },
+  // Liceo Scientifico
+  'liceo-scientifico': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quarta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'chimica', name: 'Chimica', icon: '🧪' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quinta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'chimica', name: 'Chimica', icon: '🧪' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  },
+  // Liceo Linguistico
+  'liceo-linguistico': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'lingua2', name: 'Seconda Lingua', icon: '🌍' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'lingua2', name: 'Seconda Lingua', icon: '🌍' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'lingua2', name: 'Seconda Lingua', icon: '🌍' },
+      { id: 'lingua3', name: 'Terza Lingua', icon: '🌍' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quarta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'lingua2', name: 'Seconda Lingua', icon: '🌍' },
+      { id: 'lingua3', name: 'Terza Lingua', icon: '🌍' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quinta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'lingua2', name: 'Seconda Lingua', icon: '🌍' },
+      { id: 'lingua3', name: 'Terza Lingua', icon: '🌍' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  },
+  // Liceo delle Scienze Umane
+  'liceo-scienze-umane': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'scienze-umane', name: 'Scienze Umane', icon: '🧠' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'latino', name: 'Latino', icon: '🏺' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'scienze-umane', name: 'Scienze Umane', icon: '🧠' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'scienze-umane', name: 'Scienze Umane', icon: '🧠' },
+      { id: 'diritto', name: 'Diritto ed Economia', icon: '⚖️' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quarta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'scienze-umane', name: 'Scienze Umane', icon: '🧠' },
+      { id: 'diritto', name: 'Diritto ed Economia', icon: '⚖️' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quinta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'scienze-umane', name: 'Scienze Umane', icon: '🧠' },
+      { id: 'diritto', name: 'Diritto ed Economia', icon: '⚖️' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  },
+  // Scuola Media
+  'scuola-media': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'seconda-lingua', name: 'Seconda Lingua', icon: '🌍' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'tecnologia', name: 'Tecnologia', icon: '💻' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'seconda-lingua', name: 'Seconda Lingua', icon: '🌍' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'tecnologia', name: 'Tecnologia', icon: '💻' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'seconda-lingua', name: 'Seconda Lingua', icon: '🌍' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'tecnologia', name: 'Tecnologia', icon: '💻' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  },
+  // Istituto Tecnico
+  'istituto-tecnico': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Integrate', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'tecnologia', name: 'Tecnologia e Tecniche', icon: '💻' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Integrate', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'tecnologia', name: 'Tecnologia e Tecniche', icon: '💻' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'diritto', name: 'Diritto ed Economia', icon: '⚖️' },
+      { id: 'materie-tecniche', name: 'Materie Tecniche', icon: '🔧' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quarta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'diritto', name: 'Diritto ed Economia', icon: '⚖️' },
+      { id: 'materie-tecniche', name: 'Materie Tecniche', icon: '🔧' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quinta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'diritto', name: 'Diritto ed Economia', icon: '⚖️' },
+      { id: 'materie-tecniche', name: 'Materie Tecniche', icon: '🔧' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  },
+  // IB Diploma Programme
+  'ib-diploma': {
+    'Year 1': [
+      { id: 'english-a', name: 'English A', icon: '🇬🇧' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'physics', name: 'Physics', icon: '⚡' },
+      { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
+      { id: 'biology', name: 'Biology', icon: '🧬' },
+      { id: 'history', name: 'History', icon: '🏛️' },
+      { id: 'economics', name: 'Economics', icon: '💰' },
+      { id: 'psychology', name: 'Psychology', icon: '🧠' },
+      { id: 'art', name: 'Visual Arts', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' },
+      { id: 'tok', name: 'Theory of Knowledge', icon: '🤔' },
+      { id: 'cas', name: 'CAS', icon: '🌍' }
+    ],
+    'Year 2': [
+      { id: 'english-a', name: 'English A', icon: '🇬🇧' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'physics', name: 'Physics', icon: '⚡' },
+      { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
+      { id: 'biology', name: 'Biology', icon: '🧬' },
+      { id: 'history', name: 'History', icon: '🏛️' },
+      { id: 'economics', name: 'Economics', icon: '💰' },
+      { id: 'psychology', name: 'Psychology', icon: '🧠' },
+      { id: 'art', name: 'Visual Arts', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' },
+      { id: 'tok', name: 'Theory of Knowledge', icon: '🤔' },
+      { id: 'cas', name: 'CAS', icon: '🌍' }
+    ]
+  },
+  // A-Levels
+  'a-levels': {
+    'AS Level': [
+      { id: 'english', name: 'English Literature', icon: '📚' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'physics', name: 'Physics', icon: '⚡' },
+      { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
+      { id: 'biology', name: 'Biology', icon: '🧬' },
+      { id: 'history', name: 'History', icon: '🏛️' },
+      { id: 'geography', name: 'Geography', icon: '🌍' },
+      { id: 'economics', name: 'Economics', icon: '💰' },
+      { id: 'art', name: 'Art & Design', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' }
+    ],
+    'A Level': [
+      { id: 'english', name: 'English Literature', icon: '📚' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'physics', name: 'Physics', icon: '⚡' },
+      { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
+      { id: 'biology', name: 'Biology', icon: '🧬' },
+      { id: 'history', name: 'History', icon: '🏛️' },
+      { id: 'geography', name: 'Geography', icon: '🌍' },
+      { id: 'economics', name: 'Economics', icon: '💰' },
+      { id: 'art', name: 'Art & Design', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' }
+    ]
+  },
+  // IGCSE
+  'igcse': {
+    'Year 10': [
+      { id: 'english', name: 'English', icon: '🇬🇧' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'physics', name: 'Physics', icon: '⚡' },
+      { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
+      { id: 'biology', name: 'Biology', icon: '🧬' },
+      { id: 'history', name: 'History', icon: '🏛️' },
+      { id: 'geography', name: 'Geography', icon: '🌍' },
+      { id: 'art', name: 'Art & Design', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' },
+      { id: 'ict', name: 'ICT', icon: '💻' }
+    ],
+    'Year 11': [
+      { id: 'english', name: 'English', icon: '🇬🇧' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'physics', name: 'Physics', icon: '⚡' },
+      { id: 'chemistry', name: 'Chemistry', icon: '🧪' },
+      { id: 'biology', name: 'Biology', icon: '🧬' },
+      { id: 'history', name: 'History', icon: '🏛️' },
+      { id: 'geography', name: 'Geography', icon: '🌍' },
+      { id: 'art', name: 'Art & Design', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' },
+      { id: 'ict', name: 'ICT', icon: '💻' }
+    ]
+  },
+  // IB Middle Years Programme
+  'ib-myp': {
+    'Year 1': [
+      { id: 'language-a', name: 'Language A', icon: '📚' },
+      { id: 'language-b', name: 'Language B', icon: '🌍' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'individuals-societies', name: 'Individuals & Societies', icon: '🏛️' },
+      { id: 'arts', name: 'Arts', icon: '🎨' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'design', name: 'Design', icon: '💻' }
+    ],
+    'Year 2': [
+      { id: 'language-a', name: 'Language A', icon: '📚' },
+      { id: 'language-b', name: 'Language B', icon: '🌍' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'individuals-societies', name: 'Individuals & Societies', icon: '🏛️' },
+      { id: 'arts', name: 'Arts', icon: '🎨' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'design', name: 'Design', icon: '💻' }
+    ],
+    'Year 3': [
+      { id: 'language-a', name: 'Language A', icon: '📚' },
+      { id: 'language-b', name: 'Language B', icon: '🌍' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'individuals-societies', name: 'Individuals & Societies', icon: '🏛️' },
+      { id: 'arts', name: 'Arts', icon: '🎨' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'design', name: 'Design', icon: '💻' }
+    ],
+    'Year 4': [
+      { id: 'language-a', name: 'Language A', icon: '📚' },
+      { id: 'language-b', name: 'Language B', icon: '🌍' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'individuals-societies', name: 'Individuals & Societies', icon: '🏛️' },
+      { id: 'arts', name: 'Arts', icon: '🎨' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'design', name: 'Design', icon: '💻' }
+    ],
+    'Year 5': [
+      { id: 'language-a', name: 'Language A', icon: '📚' },
+      { id: 'language-b', name: 'Language B', icon: '🌍' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'individuals-societies', name: 'Individuals & Societies', icon: '🏛️' },
+      { id: 'arts', name: 'Arts', icon: '🎨' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'design', name: 'Design', icon: '💻' }
+    ],
+    'Year 6': [
+      { id: 'language-a', name: 'Language A', icon: '📚' },
+      { id: 'language-b', name: 'Language B', icon: '🌍' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'individuals-societies', name: 'Individuals & Societies', icon: '🏛️' },
+      { id: 'arts', name: 'Arts', icon: '🎨' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'design', name: 'Design', icon: '💻' }
+    ],
+    'Year 7': [
+      { id: 'language-a', name: 'Language A', icon: '📚' },
+      { id: 'language-b', name: 'Language B', icon: '🌍' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'individuals-societies', name: 'Individuals & Societies', icon: '🏛️' },
+      { id: 'arts', name: 'Arts', icon: '🎨' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'design', name: 'Design', icon: '💻' }
+    ],
+    'Year 8': [
+      { id: 'language-a', name: 'Language A', icon: '📚' },
+      { id: 'language-b', name: 'Language B', icon: '🌍' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'individuals-societies', name: 'Individuals & Societies', icon: '🏛️' },
+      { id: 'arts', name: 'Arts', icon: '🎨' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'design', name: 'Design', icon: '💻' }
+    ],
+    'Year 9': [
+      { id: 'language-a', name: 'Language A', icon: '📚' },
+      { id: 'language-b', name: 'Language B', icon: '🌍' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'individuals-societies', name: 'Individuals & Societies', icon: '🏛️' },
+      { id: 'arts', name: 'Arts', icon: '🎨' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'design', name: 'Design', icon: '💻' }
+    ]
+  },
+  // AP Courses
+  'ap-courses': {
+    'Grade 11': [
+      { id: 'ap-english', name: 'AP English Literature', icon: '📚' },
+      { id: 'ap-calculus', name: 'AP Calculus AB', icon: '📐' },
+      { id: 'ap-physics', name: 'AP Physics', icon: '⚡' },
+      { id: 'ap-chemistry', name: 'AP Chemistry', icon: '🧪' },
+      { id: 'ap-biology', name: 'AP Biology', icon: '🧬' },
+      { id: 'ap-history', name: 'AP US History', icon: '🏛️' },
+      { id: 'ap-economics', name: 'AP Economics', icon: '💰' },
+      { id: 'ap-psychology', name: 'AP Psychology', icon: '🧠' },
+      { id: 'ap-art', name: 'AP Studio Art', icon: '🎨' },
+      { id: 'ap-music', name: 'AP Music Theory', icon: '🎵' }
+    ],
+    'Grade 12': [
+      { id: 'ap-english', name: 'AP English Literature', icon: '📚' },
+      { id: 'ap-calculus', name: 'AP Calculus BC', icon: '📐' },
+      { id: 'ap-physics', name: 'AP Physics C', icon: '⚡' },
+      { id: 'ap-chemistry', name: 'AP Chemistry', icon: '🧪' },
+      { id: 'ap-biology', name: 'AP Biology', icon: '🧬' },
+      { id: 'ap-history', name: 'AP World History', icon: '🏛️' },
+      { id: 'ap-economics', name: 'AP Economics', icon: '💰' },
+      { id: 'ap-psychology', name: 'AP Psychology', icon: '🧠' },
+      { id: 'ap-art', name: 'AP Studio Art', icon: '🎨' },
+      { id: 'ap-music', name: 'AP Music Theory', icon: '🎵' }
+    ]
+  },
+  // American High School
+  'american-high-school': {
+    'Freshman': [
+      { id: 'english', name: 'English', icon: '📚' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'science', name: 'Science', icon: '🔬' },
+      { id: 'social-studies', name: 'Social Studies', icon: '🏛️' },
+      { id: 'foreign-language', name: 'Foreign Language', icon: '🌍' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'art', name: 'Art', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' }
+    ],
+    'Sophomore': [
+      { id: 'english', name: 'English', icon: '📚' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'science', name: 'Science', icon: '🔬' },
+      { id: 'social-studies', name: 'Social Studies', icon: '🏛️' },
+      { id: 'foreign-language', name: 'Foreign Language', icon: '🌍' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'art', name: 'Art', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' }
+    ],
+    'Junior': [
+      { id: 'english', name: 'English', icon: '📚' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'science', name: 'Science', icon: '🔬' },
+      { id: 'social-studies', name: 'Social Studies', icon: '🏛️' },
+      { id: 'foreign-language', name: 'Foreign Language', icon: '🌍' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'art', name: 'Art', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' }
+    ],
+    'Senior': [
+      { id: 'english', name: 'English', icon: '📚' },
+      { id: 'mathematics', name: 'Mathematics', icon: '📐' },
+      { id: 'science', name: 'Science', icon: '🔬' },
+      { id: 'social-studies', name: 'Social Studies', icon: '🏛️' },
+      { id: 'foreign-language', name: 'Foreign Language', icon: '🌍' },
+      { id: 'physical-education', name: 'Physical Education', icon: '⚽' },
+      { id: 'art', name: 'Art', icon: '🎨' },
+      { id: 'music', name: 'Music', icon: '🎵' }
+    ]
+  },
+  // French Baccalauréat
+  'french-bac': {
+    'Seconde': [
+      { id: 'francais', name: 'Français', icon: '🇫🇷' },
+      { id: 'mathematiques', name: 'Mathématiques', icon: '📐' },
+      { id: 'histoire-geo', name: 'Histoire-Géographie', icon: '🏛️' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'langues', name: 'Langues Vivantes', icon: '🌍' },
+      { id: 'eps', name: 'EPS', icon: '⚽' },
+      { id: 'arts', name: 'Arts Plastiques', icon: '🎨' },
+      { id: 'musique', name: 'Musique', icon: '🎵' }
+    ],
+    'Première': [
+      { id: 'francais', name: 'Français', icon: '🇫🇷' },
+      { id: 'mathematiques', name: 'Mathématiques', icon: '📐' },
+      { id: 'histoire-geo', name: 'Histoire-Géographie', icon: '🏛️' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'langues', name: 'Langues Vivantes', icon: '🌍' },
+      { id: 'eps', name: 'EPS', icon: '⚽' },
+      { id: 'philosophie', name: 'Philosophie', icon: '🤔' },
+      { id: 'specialites', name: 'Spécialités', icon: '🎯' }
+    ],
+    'Terminale': [
+      { id: 'philosophie', name: 'Philosophie', icon: '🤔' },
+      { id: 'mathematiques', name: 'Mathématiques', icon: '📐' },
+      { id: 'histoire-geo', name: 'Histoire-Géographie', icon: '🏛️' },
+      { id: 'sciences', name: 'Sciences', icon: '🔬' },
+      { id: 'langues', name: 'Langues Vivantes', icon: '🌍' },
+      { id: 'eps', name: 'EPS', icon: '⚽' },
+      { id: 'specialites', name: 'Spécialités', icon: '🎯' }
+    ]
+  },
+  // German Abitur
+  'german-abitur': {
+    'Klasse 11': [
+      { id: 'deutsch', name: 'Deutsch', icon: '🇩🇪' },
+      { id: 'mathematik', name: 'Mathematik', icon: '📐' },
+      { id: 'geschichte', name: 'Geschichte', icon: '🏛️' },
+      { id: 'biologie', name: 'Biologie', icon: '🧬' },
+      { id: 'chemie', name: 'Chemie', icon: '🧪' },
+      { id: 'physik', name: 'Physik', icon: '⚡' },
+      { id: 'englisch', name: 'Englisch', icon: '🇬🇧' },
+      { id: 'sport', name: 'Sport', icon: '⚽' }
+    ],
+    'Klasse 12': [
+      { id: 'deutsch', name: 'Deutsch', icon: '🇩🇪' },
+      { id: 'mathematik', name: 'Mathematik', icon: '📐' },
+      { id: 'geschichte', name: 'Geschichte', icon: '🏛️' },
+      { id: 'biologie', name: 'Biologie', icon: '🧬' },
+      { id: 'chemie', name: 'Chemie', icon: '🧪' },
+      { id: 'physik', name: 'Physik', icon: '⚡' },
+      { id: 'englisch', name: 'Englisch', icon: '🇬🇧' },
+      { id: 'sport', name: 'Sport', icon: '⚽' }
+    ],
+    'Klasse 13': [
+      { id: 'deutsch', name: 'Deutsch', icon: '🇩🇪' },
+      { id: 'mathematik', name: 'Mathematik', icon: '📐' },
+      { id: 'geschichte', name: 'Geschichte', icon: '🏛️' },
+      { id: 'biologie', name: 'Biologie', icon: '🧬' },
+      { id: 'chemie', name: 'Chemie', icon: '🧪' },
+      { id: 'physik', name: 'Physik', icon: '⚡' },
+      { id: 'englisch', name: 'Englisch', icon: '🇬🇧' },
+      { id: 'sport', name: 'Sport', icon: '⚽' }
+    ]
+  },
+  // Altro Sistema Internazionale
+  'other-international': {
+    'Anno 1': [
+      { id: 'lingua-madre', name: 'Lingua Madre', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'lingue-straniere', name: 'Lingue Straniere', icon: '🌍' },
+      { id: 'arte', name: 'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' }
+    ],
+    'Anno 2': [
+      { id: 'lingua-madre', name: 'Lingua Madre', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'lingue-straniere', name: 'Lingue Straniere', icon: '🌍' },
+      { id: 'arte', name: 'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' }
+    ],
+    'Anno 3': [
+      { id: 'lingua-madre', name: 'Lingua Madre', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'lingue-straniere', name: 'Lingue Straniere', icon: '🌍' },
+      { id: 'arte', name: 'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' }
+    ],
+    'Anno 4': [
+      { id: 'lingua-madre', name: 'Lingua Madre', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'lingue-straniere', name: 'Lingue Straniere', icon: '🌍' },
+      { id: 'arte', name: 'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' }
+    ],
+    'Anno 5': [
+      { id: 'lingua-madre', name: 'Lingua Madre', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'lingue-straniere', name: 'Lingue Straniere', icon: '🌍' },
+      { id: 'arte', name: 'Arte', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' }
+    ]
+  },
+  // Istituto Professionale
+  'istituto-professionale': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Integrate', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'tecnologia', name: 'Tecnologia e Tecniche', icon: '💻' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Integrate', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'tecnologia', name: 'Tecnologia e Tecniche', icon: '💻' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'diritto', name: 'Diritto ed Economia', icon: '⚖️' },
+      { id: 'materie-professionali', name: 'Materie Professionali', icon: '🔧' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quarta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'diritto', name: 'Diritto ed Economia', icon: '⚖️' },
+      { id: 'materie-professionali', name: 'Materie Professionali', icon: '🔧' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quinta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'diritto', name: 'Diritto ed Economia', icon: '⚖️' },
+      { id: 'materie-professionali', name: 'Materie Professionali', icon: '🔧' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  },
+  // Scuola Elementare
+  'scuola-elementare': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'tecnologia', name: 'Tecnologia', icon: '💻' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'tecnologia', name: 'Tecnologia', icon: '💻' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'tecnologia', name: 'Tecnologia', icon: '💻' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quarta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'tecnologia', name: 'Tecnologia', icon: '💻' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quinta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'scienze', name: 'Scienze', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Arte e Immagine', icon: '🎨' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'tecnologia', name: 'Tecnologia', icon: '💻' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  },
+  // Liceo Artistico
+  'liceo-artistico': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Discipline Grafiche e Pittoriche', icon: '🎨' },
+      { id: 'design', name: 'Design', icon: '🎯' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Discipline Grafiche e Pittoriche', icon: '🎨' },
+      { id: 'design', name: 'Design', icon: '🎯' },
+      { id: 'musica', name: 'Musica', icon: '🎵' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Discipline Grafiche e Pittoriche', icon: '🎨' },
+      { id: 'design', name: 'Design', icon: '🎯' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quarta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Discipline Grafiche e Pittoriche', icon: '🎨' },
+      { id: 'design', name: 'Design', icon: '🎯' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quinta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'arte', name: 'Discipline Grafiche e Pittoriche', icon: '🎨' },
+      { id: 'design', name: 'Design', icon: '🎯' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  },
+  // Liceo Musicale
+  'liceo-musicale': {
+    'Prima': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'musica', name: 'Teoria, Analisi e Composizione', icon: '🎵' },
+      { id: 'strumento', name: 'Strumento', icon: '🎸' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Seconda': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'musica', name: 'Teoria, Analisi e Composizione', icon: '🎵' },
+      { id: 'strumento', name: 'Strumento', icon: '🎸' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Terza': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'geografia', name: 'Geografia', icon: '🌍' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'scienze', name: 'Scienze Naturali', icon: '🔬' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'musica', name: 'Teoria, Analisi e Composizione', icon: '🎵' },
+      { id: 'strumento', name: 'Strumento', icon: '🎸' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quarta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'musica', name: 'Teoria, Analisi e Composizione', icon: '🎵' },
+      { id: 'strumento', name: 'Strumento', icon: '🎸' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ],
+    'Quinta': [
+      { id: 'italiano', name: 'Italiano', icon: '📚' },
+      { id: 'storia', name: 'Storia', icon: '🏛️' },
+      { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
+      { id: 'matematica', name: 'Matematica', icon: '📐' },
+      { id: 'fisica', name: 'Fisica', icon: '⚡' },
+      { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
+      { id: 'musica', name: 'Teoria, Analisi e Composizione', icon: '🎵' },
+      { id: 'strumento', name: 'Strumento', icon: '🎸' },
+      { id: 'arte', name: 'Storia dell\'Arte', icon: '🎨' },
+      { id: 'ed-fisica', name: 'Educazione Fisica', icon: '⚽' },
+      { id: 'religione', name: 'Religione', icon: '⛪' }
+    ]
+  }
+};
+
+// Materie generiche per curricula non specificati
+const genericSubjects = [
   { id: 'matematica', name: 'Matematica', icon: '📐' },
   { id: 'italiano', name: 'Italiano', icon: '📚' },
   { id: 'inglese', name: 'Inglese', icon: '🇬🇧' },
@@ -51,6 +1059,41 @@ const subjects = [
   { id: 'filosofia', name: 'Filosofia', icon: '🤔' },
   { id: 'arte', name: 'Arte', icon: '🎨' }
 ];
+
+const mapCurriculumToWaitlist = (curriculum: string, sistema: string): 'Italian_Licei' | 'IGCSE' | 'IB_DP' | 'IB_MYP' | 'IB_PYP' => {
+  if (!curriculum) {
+    return 'Italian_Licei';
+  }
+
+  const normalized = curriculum.toLowerCase();
+  const system = sistema?.toLowerCase() || 'italia';
+
+  if (system === 'internazionale') {
+    if (normalized.includes('myp')) {
+      return 'IB_MYP';
+    }
+    if (normalized.includes('ib')) {
+      return 'IB_DP';
+    }
+    if (
+      normalized.includes('igcse') ||
+      normalized.includes('a-level') ||
+      normalized.includes('ap-') ||
+      normalized.includes('american') ||
+      normalized.includes('french') ||
+      normalized.includes('german') ||
+      normalized.includes('international')
+    ) {
+      return 'IGCSE';
+    }
+  }
+
+  if (normalized.includes('pyp')) {
+    return 'IB_PYP';
+  }
+
+  return 'Italian_Licei';
+};
 
 // Componente per gli step
 const StepIndicator = ({ currentStep }) => (
@@ -80,6 +1123,7 @@ const BetaAccessPage = () => {
     nome: '',
     cognome: '',
     email: '',
+    userType: 'parent', // Nuovo campo per distinguere genitore/studente
     sistemaScolastico: 'italia',
     curriculum: '',
     classe: '',
@@ -97,11 +1141,14 @@ const BetaAccessPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
     setFormData(prev => ({ 
       ...prev, 
       [name]: value,
-      // Reset classe quando cambia il curriculum
-      ...(name === 'curriculum' && { classe: '' })
+      // Reset classe e materie quando cambia il curriculum
+      ...(name === 'curriculum' && { classe: '', materie: [] }),
+      // Reset materie quando cambia la classe
+      ...(name === 'classe' && { materie: [] })
     }));
   };
 
@@ -129,29 +1176,49 @@ const BetaAccessPage = () => {
     }
 
     try {
-      // Creiamo un riferimento a un nuovo documento nella collezione 'betaRequests'.
-      // Usiamo l'email come ID del documento per evitare richieste duplicate.
-      const requestDocRef = doc(db, 'betaRequests', formData.email);
+      const normalizedCurriculum = mapCurriculumToWaitlist(formData.curriculum, formData.sistemaScolastico);
+      const motivationNote = formData.motivazione?.trim();
+      const noteSections = [
+        motivationNote,
+        `Sistema scolastico: ${formData.sistemaScolastico}`,
+        `Percorso selezionato: ${formData.curriculum || 'n/d'}`,
+        `Classe: ${formData.classe || 'n/d'}`
+      ].filter(Boolean);
 
-      // Salviamo i dati del form nel documento.
-      await setDoc(requestDocRef, {
-        nome: formData.nome,
-        cognome: formData.cognome,
-        email: formData.email,
-        sistemaScolastico: formData.sistemaScolastico,
-        curriculum: formData.curriculum,
-        classe: formData.classe,
-        materie: formData.materie,
-        motivazione: formData.motivazione,
-        requestedAt: serverTimestamp(), // Aggiunge un timestamp del server
-        status: 'pending' // Stato iniziale della richiesta
+      const response = await fetch(`${BACKEND_API_URL}/api/waitlist/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: formData.email.trim(),
+          firstName: formData.nome.trim(),
+          lastName: formData.cognome.trim(),
+          curriculum: normalizedCurriculum,
+          classe: formData.classe,
+          materie: formData.materie,
+          submittedBy: formData.userType,
+          notes: noteSections.length > 0 ? noteSections.join('\n') : null
+        })
       });
-      
-      setIsSubmitting(false);
-      setIsSubmitted(true);
 
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}));
+        const detail = errorBody?.detail || 'Errore sconosciuto';
+        throw new Error(detail);
+      }
+
+      const payload = await response.json();
+
+      if (payload?.already_exists) {
+        setError('Sei già presente nella lista d’attesa. Ti contatteremo appena sarà disponibile un posto!');
+      } else {
+        setIsSubmitted(true);
+      }
+
+      setIsSubmitting(false);
     } catch (err) {
-      console.error("Errore durante il salvataggio su Firestore: ", err);
+      console.error("Errore durante l'invio alla waitlist:", err);
       setError("Si è verificato un errore durante l'invio della richiesta. Riprova più tardi.");
       setIsSubmitting(false);
     }
@@ -166,6 +1233,21 @@ const BetaAccessPage = () => {
     if (!formData.curriculum) return [];
     const selectedCurriculum = curriculaData[formData.sistemaScolastico]?.find(c => c.value === formData.curriculum);
     return selectedCurriculum?.classes || [];
+  };
+
+  // Ottieni le materie disponibili per il curriculum e classe selezionati
+  const getAvailableSubjects = () => {
+    if (!formData.curriculum || !formData.classe) {
+      return genericSubjects;
+    }
+    
+    const curriculumSubjects = subjectsByCurriculum[formData.curriculum];
+    
+    if (curriculumSubjects && curriculumSubjects[formData.classe]) {
+      return curriculumSubjects[formData.classe];
+    }
+    
+    return genericSubjects;
   };
 
   if (isSubmitted) {
@@ -210,9 +1292,10 @@ const BetaAccessPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          {/* Sezione Sinistra: Form a Step */}
-          <div className="xl:col-span-2">
+        {/* CORREZIONE #2: Modificata la griglia per essere mobile-first */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* La colonna del form ora occupa 2/3 su schermi grandi */}
+          <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
               <StepIndicator currentStep={step} />
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -220,6 +1303,39 @@ const BetaAccessPage = () => {
                 {step === 1 && (
                   // CONTENUTO STEP 1: DATI PERSONALI
                   <section>
+                    <div className="mb-6">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Chi sta compilando questo form? *</label>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label className="flex items-center p-4 border border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                          <input
+                            type="radio"
+                            name="userType"
+                            value="parent"
+                            checked={formData.userType === 'parent'}
+                            onChange={handleInputChange}
+                            className="mr-3 text-blue-600 focus:ring-blue-500"
+                          />
+                          <div>
+                            <div className="font-medium text-gray-900">👨‍👩‍👧‍👦 Genitore</div>
+                            <div className="text-sm text-gray-500">Compilo per mio figlio/a</div>
+                          </div>
+                        </label>
+                        <label className="flex items-center p-4 border border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                          <input
+                            type="radio"
+                            name="userType"
+                            value="student"
+                            checked={formData.userType === 'student'}
+                            onChange={handleInputChange}
+                            className="mr-3 text-blue-600 focus:ring-blue-500"
+                          />
+                          <div>
+                            <div className="font-medium text-gray-900">🎓 Studente</div>
+                            <div className="text-sm text-gray-500">Compilo per me stesso/a</div>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Nome *</label>
@@ -314,9 +1430,16 @@ const BetaAccessPage = () => {
                       </select>
                     </div>
                     <div className="mb-6">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Materie di Interesse</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Materie di Interesse
+                        {formData.curriculum && formData.classe && (
+                          <span className="text-blue-600 ml-2">
+                            (specifiche per {formData.curriculum} - {formData.classe})
+                          </span>
+                        )}
+                      </label>
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {subjects.map((subject) => (
+                        {getAvailableSubjects().map((subject) => (
                           <label key={subject.id} className="flex items-center space-x-2 cursor-pointer">
                             <input
                               type="checkbox"
@@ -376,7 +1499,7 @@ const BetaAccessPage = () => {
             </div>
           </div>
 
-          {/* Sezione Destra: Sidebar Persuasiva con Stile Avanzato */}
+          {/* La sidebar ora occupa 1/3 su schermi grandi e va a capo automaticamente su mobile */}
           <div className="space-y-6">
             {/* Testimonial */}
             <div className="perspective-container">

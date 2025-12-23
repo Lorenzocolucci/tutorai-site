@@ -1,152 +1,281 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
+import Link from 'next/link';
 import Modal from '@/components/ui/Modal';
 
+// Hook per tracciare la visibilità dell'elemento
+function useInView(options) {
+    const ref = useRef(null);
+    const [isInView, setIsInView] = useState(false);
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                setIsInView(true);
+                observer.unobserve(entry.target);
+            }
+        }, options);
+        if (ref.current) observer.observe(ref.current);
+        return () => { if (ref.current) observer.unobserve(ref.current); };
+    }, [options]);
+    return [ref, isInView];
+}
+
 const featuresData = [
-  { icon: '🗣️', title: 'Spiegazioni Ultra-Chiare', description: 'TutorAI adatta ogni spiegazione al tuo linguaggio. Se sei visivo, userà grafici. Se sei uditivo, ti racconterà storie.', imageUrl: '/assets/features/pexels-shkrabaanthony-5306436.jpg', alt: 'Persona che disegna un diagramma chiaro su una lavagna trasparente.', detailedDescription: ( <> <p className="mb-4">A differenza di un tutor umano che ha un solo metodo, TutorAI ne ha infiniti. Il nostro sistema analizza il tuo stile di apprendimento e adatta ogni concetto per te.</p> <ul className="list-disc list-inside space-y-2"> <li><strong>Apprendimento Visivo:</strong> Riceverai diagrammi, mappe concettuali e grafici interattivi.</li> <li><strong>Apprendimento Uditivo:</strong> Le spiegazioni verranno trasformate in storie, analogie e podcast.</li> <li><strong>Apprendimento Pratico:</strong> Ti verranno proposti esempi reali e problemi da risolvere passo dopo passo.</li> </ul> <p className="mt-4 font-semibold">L'obiettivo non è solo farti capire, ma farti capire nel modo più veloce e profondo per te.</p> </> ) },
-  { icon: '🏋️‍♂️', title: 'Esercizi Mirati', description: 'Ogni esercizio è calibrato sul tuo livello. Troppo facile? Ti sfida. Troppo difficile? Ti guida passo dopo passo.', imageUrl: '/assets/features/pexels-shkrabaanthony-5306455.jpg', alt: 'Studentessa concentrata mentre risolve un problema complesso alla lavagna.', detailedDescription: ( <> <p className="mb-4">Basta con le schede di esercizi standard. TutorAI crea percorsi di pratica unici per ogni studente, basati sul principio della "Zona di Sviluppo Prossimale".</p> <ul className="list-disc list-inside space-y-2"> <li><strong>Difficoltà Adattiva:</strong> Il livello di ogni domanda si adatta in tempo reale alla tua ultima risposta.</li> <li><strong>Feedback Istantaneo:</strong> Non ti dice solo se hai sbagliato, ma *perché* hai sbagliato e come correggerti.</li> <li><strong>Varietà di Esercizi:</strong> Dalle domande a risposta multipla ai problemi complessi, per testare la tua conoscenza a 360°.</li> </ul> <p className="mt-4 font-semibold">Ogni esercizio è un'opportunità di crescita, non un test di valutazione.</p> </> ) },
-  { icon: '🌉', title: 'Recupero Lacune', description: 'Identifica i concetti non assimilati e crea percorsi di rinforzo per costruire basi indistruttibili.', imageUrl: '/assets/features/cowomen-hz-6prUpVss-unsplash.jpg', alt: 'Gruppo di studio che collega idee, a simboleggiare il recupero delle lacune.', detailedDescription: ( <> <p className="mb-4">La maggior parte delle difficoltà future nasce da piccole lacune passate. TutorAI agisce come un radar, identificandole prima che diventino un problema.</p> <ul className="list-disc list-inside space-y-2"> <li><strong>Diagnosi Automatica:</strong> Mentre studi, l'IA mappa la tua conoscenza e rileva i "buchi".</li> <li><strong>Piani di Recupero:</strong> Crea automaticamente mini-lezioni ed esercizi mirati solo sugli argomenti che non hai assimilato.</li> <li><strong>Ripasso Spaziato:</strong> Ti ripropone i concetti più difficili a intervalli di tempo ottimali per fissarli nella memoria a lungo termine.</li> </ul> <p className="mt-4 font-semibold">Costruiamo insieme fondamenta solide, mattone dopo mattone.</p> </> ) },
-  { icon: '🏆', title: 'Preparazione Test', description: 'Simula i tuoi esami con quiz dinamici e strategie per superare l\'ansia.', imageUrl: '/assets/features/pexels-roman-odintsov-11025029.jpg', alt: 'Studentessa sorridente e fiduciosa prima di un esame.', detailedDescription: ( <> <p className="mb-4">La preparazione agli esami non è solo questione di conoscenza, ma anche di strategia e gestione dell'ansia. TutorAI ti prepara su tutti i fronti.</p> <ul className="list-disc list-inside space-y-2"> <li><strong>Simulazioni Realistiche:</strong> Quiz che replicano esattamente il formato e la difficoltà dei tuoi esami reali.</li> <li><strong>Strategie Anti-Ansia:</strong> Tecniche di respirazione, gestione del tempo e approccio mentale per affrontare l'esame con serenità.</li> <li><strong>Analisi delle Performance:</strong> Dettagliata analisi dei tuoi punti di forza e debolezza per ottimizzare lo studio.</li> </ul> <p className="mt-4 font-semibold">Arriva all'esame non solo preparato, ma sicuro di te stesso.</p> </> ) },
-  { icon: '📈', title: 'Progresso Continuo', description: 'Monitora ogni tuo miglioramento e adatta la difficoltà in tempo reale.', imageUrl: '/assets/features/annie-spratt-4E1JOFK55kc-unsplash.jpg', alt: 'Schermata di un computer con grafici e dati che mostrano un progresso positivo.', detailedDescription: ( <> <p className="mb-4">Il vero apprendimento avviene quando sei costantemente sfidato ma non sopraffatto. TutorAI mantiene questo equilibrio perfetto.</p> <ul className="list-disc list-inside space-y-2"> <li><strong>Monitoraggio in Tempo Reale:</strong> Ogni tua risposta viene analizzata per calibrare la difficoltà successiva.</li> <li><strong>Grafici di Progresso:</strong> Visualizza i tuoi miglioramenti con grafici chiari e motivanti.</li> <li><strong>Obiettivi Personalizzati:</strong> Stabilisce traguardi realistici e ti guida verso il loro raggiungimento.</li> </ul> <p className="mt-4 font-semibold">Vedi i tuoi progressi giorno dopo giorno, motivazione dopo motivazione.</p> </> ) },
-  { icon: '❤️‍🔥', title: 'Motivazione Costante', description: 'Ti supporta nei momenti di difficoltà, celebra i tuoi successi e ti aiuta a non mollare mai.', imageUrl: '/assets/features/bandlab-s2-1-Ezz5Uk-unsplash.jpg', alt: 'Studente che riceve un feedback positivo e alza il pugno in segno di successo.', detailedDescription: ( <> <p className="mb-4">L'apprendimento è un viaggio emotivo. TutorAI non è solo un tutor, ma un vero compagno che ti accompagna in ogni passo.</p> <ul className="list-disc list-inside space-y-2"> <li><strong>Celebrazione dei Successi:</strong> Ogni piccolo traguardo viene riconosciuto e celebrato per mantenere alta la motivazione.</li> <li><strong>Supporto nei Momenti Difficili:</strong> Quando sei bloccato, ricevi incoraggiamento e strategie per superare l'ostacolo.</li> <li><strong>Messaggi Motivazionali:</strong> Citazioni, storie di successo e messaggi personalizzati per mantenere viva la passione per l'apprendimento.</li> </ul> <p className="mt-4 font-semibold">Perché il miglior tutor è quello che crede in te più di quanto tu creda in te stesso.</p> </> ) }
+    {
+        title: "Memoria che Evolve con Te",
+        description: "TutorAI ricorda tutto il tuo percorso, non solo la lezione di oggi. Un profilo cognitivo permanente per un apprendimento davvero personalizzato.",
+        imageUrl: "/assets/features/pexels-shkrabaanthony-5306436.jpg",
+        alt: "Persona che disegna un diagramma chiaro su una lavagna trasparente.",
+        detailedDescription: "A differenza dei tutor tradizionali che dimenticano tutto a fine lezione, TutorAI costruisce un profilo cognitivo permanente che evolve con te. Ogni domanda, ogni successo, ogni difficoltà diventa parte della tua storia educativa, permettendo un supporto sempre più personalizzato e mirato.",
+        isSpecial: true,
+        linkTo: "/come-funziona",
+        icon: "🧠"
+    },
+    {
+        title: "Analisi Cognitiva Avanzata",
+        description: "L'IA analizza il tuo stile di apprendimento e crea un percorso personalizzato che si adatta alle tue esigenze specifiche.",
+        imageUrl: "/assets/features/pexels-shkrabaanthony-5306436.jpg",
+        alt: "Persona che disegna un diagramma chiaro su una lavagna trasparente.",
+        detailedDescription: "TutorAI utilizza algoritmi di machine learning avanzati per analizzare il tuo stile cognitivo, le tue lacune e i tuoi punti di forza. L'IA crea un profilo di apprendimento unico che viene costantemente aggiornato in base ai tuoi progressi. Questo permette di personalizzare ogni lezione, esercizio e spiegazione per massimizzare la tua comprensione e ritenzione."
+    },
+    {
+        title: "Recupero Lacune Intelligente",
+        description: "Identifica e colma automaticamente le lacune nelle tue conoscenze, costruendo una base solida per il futuro.",
+        imageUrl: "/assets/features/pexels-shkrabaanthony-5306455.jpg",
+        alt: "Studentessa concentrata mentre risolve un problema complesso alla lavagna.",
+        detailedDescription: "Il sistema identifica automaticamente le lacune nelle tue conoscenze attraverso test diagnostici intelligenti e analisi delle performance. Una volta individuate, TutorAI crea un percorso di recupero mirato che riempie questi gap in modo progressivo e logico. Questo approccio garantisce che non ci siano 'buchi' nella tua preparazione che potrebbero compromettere l'apprendimento futuro."
+    },
+    {
+        title: "Simulazioni Verifiche Realistiche",
+        description: "Affronta le verifiche con sicurezza grazie a simulazioni che replicano perfettamente l'ambiente d'esame.",
+        imageUrl: "/assets/features/cowomen-hz-6prUpVss-unsplash.jpg",
+        alt: "Gruppo di studio che collega idee, a simboleggiare il recupero delle lacune.",
+        detailedDescription: "TutorAI crea simulazioni di verifiche che replicano fedelmente l'ambiente d'esame, inclusi i livelli di difficoltà, i tempi e i tipi di domande. Questo ti permette di familiarizzare con il formato e ridurre l'ansia da prestazione. Le simulazioni sono adattive: se sbagli, il sistema ti fornisce spiegazioni dettagliate e ti propone esercizi simili per rafforzare la comprensione."
+    },
+    {
+        title: "Gestione Ansia e Stress",
+        description: "Tecniche di rilassamento e strategie mentali per affrontare serenamente ogni sfida accademica.",
+        imageUrl: "/assets/features/pexels-roman-odintsov-11025029.jpg",
+        alt: "Studentessa sorridente e fiduciosa prima di un esame.",
+        detailedDescription: "TutorAI include un modulo dedicato alla gestione dell'ansia e dello stress. Attraverso tecniche di respirazione, mindfulness e strategie cognitive, impari a mantenere la calma durante le verifiche e a gestire la pressione accademica. Il sistema monitora i tuoi livelli di stress e ti suggerisce pause e attività di rilassamento quando necessario."
+    },
+    {
+        title: "Ripasso Estivo Intelligente",
+        description: "Mantieni attive le conoscenze durante l'estate con un programma di ripasso personalizzato e coinvolgente.",
+        imageUrl: "/assets/features/pexels-ivan-samkov-4624901.jpg",
+        alt: "Bambini che studiano con entusiasmo durante l'estate.",
+        detailedDescription: "Durante l'estate, TutorAI crea un programma di ripasso intelligente che mantiene attive le tue conoscenze senza essere opprimente. Il sistema utilizza la tecnica della ripetizione spaziata per rafforzare la memoria a lungo termine. Gli esercizi sono brevi, coinvolgenti e adattati ai tuoi interessi, rendendo il ripasso estivo piacevole ed efficace."
+    },
+    {
+        title: "Anticipazione Programmi Futuri",
+        description: "Preparati in anticipo per gli argomenti che affronterai, partendo sempre un passo avanti.",
+        imageUrl: "/assets/features/pexels-ivan-samkov-4624915.jpg",
+        alt: "Ragazzi che collaborano nello studio anticipando i programmi futuri.",
+        detailedDescription: "TutorAI analizza i programmi scolastici futuri e ti prepara in anticipo per gli argomenti che affronterai. Questo approccio proattivo ti permette di arrivare a scuola con una base solida, rendendo l'apprendimento più fluido e meno stressante. Il sistema identifica anche le connessioni tra argomenti diversi, aiutandoti a costruire una comprensione più profonda e interconnessa."
+    }
 ];
 
-// Hook per animazioni di entrata
-const useInView = (options = {}) => {
-  const [isInView, setIsInView] = useState(false);
-  const ref = useRef(null);
+const FeatureCard = ({ feature, onClick, className = "", delay = 0, t }) => {
+    const [ref, isInView] = useInView();
+    const cardRef = useRef(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsInView(true);
-        observer.unobserve(entry.target);
-      }
-    }, { threshold: 0.1, ...options });
+    const handleMouseMove = (e) => {
+        if (!cardRef.current) return;
+        const { left, top } = cardRef.current.getBoundingClientRect();
+        cardRef.current.style.setProperty('--glow-x', `${e.clientX - left}px`);
+        cardRef.current.style.setProperty('--glow-y', `${e.clientY - top}px`);
+    };
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    const handleCardClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Se è una feature speciale con link, naviga alla pagina
+        if (feature.isSpecial && feature.linkTo) {
+            window.location.href = feature.linkTo;
+        } else {
+            onClick();
+        }
+    };
+
+    // Controlli di sicurezza per evitare errori
+    if (!feature) {
+        return null;
     }
 
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, [options]);
-
-  return [ref, isInView];
-};
-
-// Sub-componente per la card con animazioni oblique
-const FeatureCard = ({ feature, onClick, className = "", delay = 0 }) => {
-  const [ref, isInView] = useInView();
-  const cardRef = useRef(null);
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const { left, top } = cardRef.current.getBoundingClientRect();
-    cardRef.current.style.setProperty('--glow-x', `${e.clientX - left}px`);
-    cardRef.current.style.setProperty('--glow-y', `${e.clientY - top}px`);
-  };
-
-  return (
-    <div
-      ref={ref}
-      className={`feature-card ${className} ${isInView ? 'animate-in' : ''}`}
-      style={{ 
-        transitionDelay: `${delay}ms`,
-        transform: isInView ? 'translateY(0) rotate(0deg)' : 'translateY(50px) rotate(25deg)',
-        opacity: isInView ? 1 : 0
-      }}
-    >
-      <div
-        ref={cardRef}
-        className="glowing-card-container h-full"
-        onMouseMove={handleMouseMove}
-        onClick={onClick}
-      >
-        <div className="glowing-card-mask bg-white cursor-pointer h-full">
-          <div className="rounded-3xl overflow-hidden h-full flex flex-col">
-            <div className="relative w-full h-48">
-              <Image src={feature.imageUrl} alt={feature.alt} fill className="object-cover" />
+    return (
+        <div
+            ref={ref}
+            className={`feature-card ${className} ${isInView ? 'animate-in' : ''}`}
+            style={{ 
+                transitionDelay: `${delay}ms`,
+                transform: isInView ? 'translateY(0) rotate(0deg)' : 'translateY(50px) rotate(25deg)',
+                opacity: isInView ? 1 : 0
+            }}
+        >
+            <div
+                ref={cardRef}
+                className="glowing-card-container h-full"
+                onMouseMove={handleMouseMove}
+                onClick={handleCardClick}
+                style={{ touchAction: 'manipulation' }}
+            >
+                <div className="glowing-card-mask bg-white cursor-pointer h-full">
+                    <div className="rounded-3xl overflow-hidden h-full flex flex-col">
+                        <div className="relative w-full h-48">
+                            <Image 
+                                src={feature.imageUrl || "/assets/features/default.jpg"} 
+                                alt={feature.alt || feature.title || "Feature"} 
+                                fill 
+                                className="object-cover" 
+                            />
+                        </div>
+                        <div className="p-8 flex flex-col flex-grow">
+                            <h3 className="text-2xl font-bold text-text-primary flex items-center gap-3">
+                                <span className="text-3xl">{feature.icon || "🎯"}</span>
+                                {feature.title || "Feature"}
+                            </h3>
+                            <p className="mt-4 text-text-secondary flex-grow">{feature.description || ""}</p>
+                            {feature.isSpecial && (
+                                <div className="mt-6 flex items-center justify-between">
+                                    <span className="bg-gradient-to-r from-primary to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                                        {t ? t('home.features.specialButton.learnMore', 'Scopri di più') : 'Scopri di più'}
+                                    </span>
+                                    <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="p-8 flex flex-col flex-grow">
-              <h3 className="text-2xl font-bold text-text-primary flex items-center gap-3">
-                <span className="text-3xl">{feature.icon}</span>
-                {feature.title}
-              </h3>
-              <p className="mt-4 text-text-secondary flex-grow">{feature.description}</p>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 const Features = () => {
-  const [selectedFeature, setSelectedFeature] = useState(null);
+    const { t, i18n } = useTranslation('pages');
+    const [selectedFeature, setSelectedFeature] = useState(null);
+    
+    // Get features data from translations with fallback
+    const featuresItems = t('home.features.items', { 
+        returnObjects: true,
+        fallback: featuresData 
+    }) || featuresData;
+    
+    // Map translated items to include images and alt text (which stay the same)
+    // Aggiungo controlli di sicurezza per evitare errori
+    const features = featuresItems.map((item, index) => {
+        const originalItem = featuresData[index];
+        return {
+            ...item,
+            imageUrl: originalItem?.imageUrl || "/assets/features/default.jpg",
+            alt: originalItem?.alt || item.title || "Feature",
+            icon: originalItem?.icon || "🎯",
+            title: item.title || originalItem?.title || "Feature",
+            description: item.description || originalItem?.description || "",
+            isSpecial: item.isSpecial || originalItem?.isSpecial || false,
+            linkTo: item.linkTo || originalItem?.linkTo || null
+        };
+    }).filter(Boolean); // Rimuove elementi undefined
 
-  return (
-    <>
-      <section id="features" className="py-16 bg-surface">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-text-primary">Un tutor potenziato dall'intelligenza artificiale</h2>
-            <p className="mt-4 text-lg text-text-secondary max-w-3xl mx-auto">Sei funzionalità rivoluzionarie che sostituiscono le ripetizioni tradizionali con un metodo più intelligente, personale ed efficace.</p>
-          </div>
-          
-          {/* Layout con larghezze diverse ma altezze uguali */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Prima Card Grande */}
-            <FeatureCard 
-              feature={featuresData[0]} 
-              onClick={() => setSelectedFeature(featuresData[0])} 
-              className="md:col-span-2" 
-              delay={0}
-            />
-            {/* Seconda Card */}
-            <FeatureCard 
-              feature={featuresData[1]} 
-              onClick={() => setSelectedFeature(featuresData[1])} 
-              delay={100}
-            />
-            {/* Terza Card */}
-            <FeatureCard 
-              feature={featuresData[2]} 
-              onClick={() => setSelectedFeature(featuresData[2])} 
-              delay={200}
-            />
-            {/* Quarta Card */}
-            <FeatureCard 
-              feature={featuresData[3]} 
-              onClick={() => setSelectedFeature(featuresData[3])} 
-              delay={300}
-            />
-            {/* Quinta Card */}
-            <FeatureCard 
-              feature={featuresData[4]} 
-              onClick={() => setSelectedFeature(featuresData[4])} 
-              delay={400}
-            />
-            {/* Sesta Card */}
-            <FeatureCard 
-              feature={featuresData[5]} 
-              onClick={() => setSelectedFeature(featuresData[5])} 
-              delay={500}
-            />
-          </div>
-        </div>
-      </section>
+    const handleFeatureClick = () => {
+        // Non serve più passare la posizione
+    };
 
-      <Modal isOpen={!!selectedFeature} onClose={() => setSelectedFeature(null)} title={selectedFeature?.title}>
-        {selectedFeature?.detailedDescription}
-      </Modal>
-    </>
-  );
+    const handleCloseModal = () => {
+        setSelectedFeature(null);
+    };
+
+    return (
+        <>
+            <section id="features" className="py-16 bg-surface">
+                <div className="container mx-auto px-6 max-w-7xl">
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl md:text-5xl font-bold text-text-primary">
+                            {t('home.features.title', 'Perché Scegliere TutorAI')}
+                        </h2>
+                        <p className="mt-4 text-lg text-text-secondary max-w-3xl mx-auto">
+                            {t('home.features.subtitle', 'Tecnologia all\'avanguardia per l\'educazione del futuro')}
+                        </p>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {features[0] && (
+                            <FeatureCard 
+                                feature={features[0]} 
+                                onClick={() => setSelectedFeature(features[0])} 
+                                className="lg:col-span-3" 
+                                delay={0}
+                                t={t}
+                            />
+                        )}
+                        {features[1] && (
+                            <FeatureCard 
+                                feature={features[1]} 
+                                onClick={() => setSelectedFeature(features[1])} 
+                                delay={100}
+                                t={t}
+                            />
+                        )}
+                        {features[2] && (
+                            <FeatureCard 
+                                feature={features[2]} 
+                                onClick={() => setSelectedFeature(features[2])} 
+                                delay={200}
+                                t={t}
+                            />
+                        )}
+                        {features[3] && (
+                            <FeatureCard 
+                                feature={features[3]} 
+                                onClick={() => setSelectedFeature(features[3])} 
+                                delay={300}
+                                t={t}
+                            />
+                        )}
+                        {features[4] && (
+                            <FeatureCard 
+                                feature={features[4]} 
+                                onClick={() => setSelectedFeature(features[4])} 
+                                delay={400}
+                                t={t}
+                            />
+                        )}
+                        {features[5] && (
+                            <FeatureCard 
+                                feature={features[5]} 
+                                onClick={() => setSelectedFeature(features[5])} 
+                                className="md:col-span-2" 
+                                delay={500}
+                                t={t}
+                            />
+                        )}
+                        {features[6] && (
+                            <FeatureCard 
+                                feature={features[6]} 
+                                onClick={() => setSelectedFeature(features[6])} 
+                                delay={600}
+                                t={t}
+                            />
+                        )}
+                    </div>
+                </div>
+            </section>
+
+            <Modal 
+                isOpen={!!selectedFeature} 
+                onClose={handleCloseModal} 
+                title={selectedFeature?.title}
+            >
+                {selectedFeature?.detailedDescription}
+            </Modal>
+        </>
+    );
 };
 
 export default Features;

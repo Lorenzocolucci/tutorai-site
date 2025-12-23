@@ -1,0 +1,62 @@
+{
+  "header": {
+    "nav": {
+      "home": "Home",
+      "features": "Features",
+      "curricula": "Curricula",
+      "about": "About Us",
+      "blog": "Blog",
+      "testimonials": "Testimonials",
+      "contact": "Contact",
+      "faq": "FAQ"
+    },
+    "cta": {
+      "login": "Login", 
+      "betaAccess": "Request Beta Access",
+      "tryNow": "Try Now"
+    },
+    "language": {
+      "switch": "Switch language",
+      "italian": "Italiano",
+      "english": "English"
+    }
+  },
+  "footer": {
+    "company": "TutorAI",
+    "description": "The future of personalized education",
+    "links": {
+      "about": "About Us",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "contact": "Contact"
+    },
+    "social": {
+      "follow": "Follow Us",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn"
+    },
+    "copyright": "© 2025 TutorAI. All rights reserved."
+  },
+  "buttons": {
+    "learnMore": "Learn More",
+    "readMore": "Read More",
+    "getStarted": "Get Started",
+    "contact": "Contact Us",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information",
+    "age": "years",
+    "verified": "Verified",
+    "progress": "Progress"
+  }
+}

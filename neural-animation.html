@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Neural Sphere Animation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+        
+        body {
+            overflow: hidden;
+            margin: 0;
+        }
+        
+        #info {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2vh;
+            color: black;
+        }
+        
+        #writing {
+            visibility: hidden;
+            position: absolute;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10vh;
+            bottom: 2vh;
+            left: calc(50% - 33vh);
+            color: #0be;
+            text-shadow: 0px -3px 2px white;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">patience... we're deforming the spheres</div>
+    <div id="writing">SYNAPSES</div>
+    
+    <!-- Shaders per gli effetti bloom -->
+    <script type="x-shader/x-vertex" id="vertexshader">
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    </script>
+    
+    <script type="x-shader/x-fragment" id="fragmentshader">
+        uniform sampler2D baseTexture;
+        uniform sampler2D bloomTexture;
+        varying vec2 vUv;
+        
+        void main() {
+            gl_FragColor = (texture2D(baseTexture, vUv) + vec4(1.0) * texture2D(bloomTexture, vUv));
+        }
+    </script>
+    
+    <script type="module" src="main.js"></script>
+</body>
+</html>

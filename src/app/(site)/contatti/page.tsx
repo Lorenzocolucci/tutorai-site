@@ -71,39 +71,47 @@ const ContactPage = () => {
           <AnimateOnScroll>
             <div className="bg-white rounded-2xl shadow-xl p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Invia un messaggio</h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" aria-label="Form di contatto">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Nome *</label>
+                    <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-2">Nome *</label>
                     <input
                       type="text"
+                      id="nome"
                       name="nome"
                       value={formData.nome}
                       onChange={handleInputChange}
                       required
+                      aria-describedby="nome-help"
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
+                    <div id="nome-help" className="sr-only">Inserisci il tuo nome completo</div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
                     <input
                       type="email"
+                      id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
                       required
+                      aria-describedby="email-help"
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
+                    <div id="email-help" className="sr-only">Inserisci il tuo indirizzo email valido</div>
                   </div>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Oggetto *</label>
+                  <label htmlFor="oggetto" className="block text-sm font-medium text-gray-700 mb-2">Oggetto *</label>
                   <select
+                    id="oggetto"
                     name="oggetto"
                     value={formData.oggetto}
                     onChange={handleInputChange}
                     required
+                    aria-describedby="oggetto-help"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Seleziona un oggetto</option>
@@ -114,28 +122,34 @@ const ContactPage = () => {
                     <option value="feedback">Feedback e Suggerimenti</option>
                     <option value="altro">Altro</option>
                   </select>
+                  <div id="oggetto-help" className="sr-only">Seleziona l'argomento della tua richiesta</div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Messaggio *</label>
+                  <label htmlFor="messaggio" className="block text-sm font-medium text-gray-700 mb-2">Messaggio *</label>
                   <textarea
+                    id="messaggio"
                     name="messaggio"
                     value={formData.messaggio}
                     onChange={handleInputChange}
                     required
                     rows={6}
                     placeholder="Descrivi la tua richiesta o domanda..."
+                    aria-describedby="messaggio-help"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                   />
+                  <div id="messaggio-help" className="sr-only">Descrivi in dettaglio la tua richiesta o domanda</div>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
+                  aria-describedby="submit-help"
                   className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
                 >
                   {isSubmitting ? 'Invio in corso...' : 'Invia Messaggio'}
                 </button>
+                <div id="submit-help" className="sr-only">Invia il tuo messaggio di contatto</div>
               </form>
             </div>
           </AnimateOnScroll>

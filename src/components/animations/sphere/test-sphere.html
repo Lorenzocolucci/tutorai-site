@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Sphere Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0f1419;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .status {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        
+        .test-links {
+            margin-top: 30px;
+        }
+        
+        .test-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background: rgba(59, 130, 246, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .test-links a:hover {
+            background: rgba(59, 130, 246, 0.3);
+            border-color: rgba(59, 130, 246, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧠 Neural Sphere Integration Test</h1>
+        
+        <div id="status" class="status">
+            ⏳ Checking integration status...
+        </div>
+        
+        <div class="test-info">
+            <h3>🎯 Features Created:</h3>
+            <ul style="text-align: left; display: inline-block;">
+                <li>✅ Fibonacci sphere node distribution (200-500 nodes)</li>
+                <li>✅ Complex connection algorithm with hub detection</li>
+                <li>✅ Custom WebGL shaders for performance</li>
+                <li>✅ Acid green connections + blue glass sphere</li>
+                <li>✅ Advanced bloom post-processing effects</li>
+                <li>✅ Performance adaptation (high/medium/low)</li>
+                <li>✅ Mobile optimization with battery detection</li>
+                <li>✅ Interactive hover/click animations</li>
+                <li>✅ Error boundary with graceful fallbacks</li>
+                <li>✅ Hero section integration</li>
+            </ul>
+        </div>
+        
+        <div class="test-links">
+            <a href="http://localhost:3000" target="_blank">🚀 Test Homepage</a>
+            <a href="http://localhost:3000/en" target="_blank">🌍 Test English Version</a>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 14px; opacity: 0.7;">
+            <p><strong>Performance Levels:</strong></p>
+            <p>🔥 High-end: 500 nodes, full effects, 60fps target</p>
+            <p>⚡ Medium: 300 nodes, reduced effects, stable performance</p>
+            <p>📱 Mobile: 150 nodes, optimized effects, battery aware</p>
+        </div>
+    </div>
+    
+    <script>
+        // Simple integration check
+        function checkIntegration() {
+            const statusEl = document.getElementById('status');
+            
+            try {
+                // Check if we can access localhost
+                fetch('http://localhost:3000')
+                    .then(response => {
+                        if (response.ok) {
+                            statusEl.className = 'status success';
+                            statusEl.innerHTML = '✅ Server running successfully! Neural Sphere should be active on homepage.';
+                        } else {
+                            throw new Error('Server not responding');
+                        }
+                    })
+                    .catch(error => {
+                        statusEl.className = 'status error';
+                        statusEl.innerHTML = '❌ Development server not running. Please run: npm run dev';
+                    });
+            } catch (error) {
+                statusEl.className = 'status error';
+                statusEl.innerHTML = '❌ Error checking server status.';
+            }
+        }
+        
+        // Run check after page load
+        setTimeout(checkIntegration, 500);
+    </script>
+</body>
+</html>

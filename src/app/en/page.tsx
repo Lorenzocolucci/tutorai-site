@@ -1,40 +1,30 @@
-import Header from "../../components/Header";
-import Hero from "../../components/Hero";
-import MiniWhy from "../../components/MiniWhy";
-import Features from "../../components/Features";
-import Demo from "../../components/Demo";
-import AcademicPath from "../../components/AcademicPath";
-import ROI from "../../components/ROI";
-import Testimonials from "../../components/Testimonials";
-import BetaAccess from "../../components/BetaAccess";
-import Curricula from "../../components/Curricula";
-import FAQ from "../../components/FAQ";
-import Pricing from "../../components/Pricing";
-import Footer from "../../components/Footer";
+import Hero from '@/components/sections/Hero';
+import Features from '@/components/sections/Features';
+import Testimonials from '@/components/sections/Testimonials';
+import AcademicPath from '@/components/sections/AcademicPath';
+import ROI from '@/components/sections/ROI';
+import AboutUs from '@/components/sections/AboutUs';
+import Curricula from '@/components/sections/Curricula';
+import Blog from '@/components/sections/Blog';
+import FAQ from '@/components/sections/FAQ';
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
+import HomePageCTAs from '@/components/sections/HomePageCTAs';
+import { generateSEOMetadata } from '@/lib/seo';
 
-export const metadata = {
-  title: "TutorAI – The tutor that adapts to your mind",
-  description: "Clear explanations, targeted exercises, real results. Limited Beta: 1000 students."
-}
+export const metadata = generateSEOMetadata('home', 'en');
 
-export default function Page() {
+export default function HomePage() {
   return (
     <>
-      <Header locale="en" />
-      <main>
-        <Hero locale="en" />
-        <MiniWhy />
-        <Features />
-        <Demo />
-        <AcademicPath />
-        <ROI />
-        <Testimonials />
-        <BetaAccess />
-        <Curricula />
-        <Pricing />
-        <FAQ />
-      </main>
-      <Footer />
+      <Hero />
+      <AnimateOnScroll><Features /></AnimateOnScroll>
+      <AnimateOnScroll><AcademicPath /></AnimateOnScroll>
+      <AnimateOnScroll><ROI /></AnimateOnScroll>
+      <HomePageCTAs />
+      <AnimateOnScroll><Curricula /></AnimateOnScroll>
+      <AnimateOnScroll><Testimonials /></AnimateOnScroll>
+      <AnimateOnScroll><Blog /></AnimateOnScroll>
+      <AnimateOnScroll><FAQ /></AnimateOnScroll>
     </>
-  )
+  );
 }

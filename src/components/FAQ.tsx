@@ -1,39 +1,58 @@
 'use client';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll';
 
-const qa = [
-  { q: "Cos’è TutorAI?", a: "Un tutor intelligente che si adatta allo stile di apprendimento, con spiegazioni ed esercizi personalizzati." },
-  { q: "Per chi è pensato?", a: "Studenti di medie, liceo e curricula internazionali; supporto anche ai genitori." },
-  { q: "Come funziona la Beta?", a: "Accesso limitato a 1000 studenti; 1 mese gratis + 1000 crediti; nessuna carta richiesta." },
-  { q: "Quali materie coprite?", a: "STEM, lingue, umanistiche e altro, a seconda del curriculum." },
-  { q: "Simulate test ed esami?", a: "Sì, con feedback immediato e strategie." },
-  { q: "È disponibile 24/7?", a: "Sì." },
-  { q: "Privacy e minori?", a: "GDPR, controlli parentali e protezione dati." },
-  { q: "Quanto costa dopo la Beta?", a: "€99,90/mese o €1.199/anno." },
-  { q: "Posso cancellarmi?", a: "Sì, quando vuoi." },
-  { q: "Quanti posti restano?", a: "L’indicatore in pagina mostra lo stato in tempo reale." },
-  { q: "Supporto umano?", a: "Team multidisciplinare (psicologi, pedagogisti, ingegneri AI)." },
-  { q: "Lingue disponibili?", a: "Italiano e Inglese (altre in futuro)." },
-];
+// Sub-componente per l'accordion con lo stesso stile della pagina FAQ
+const FaqItem = ({ faq, isOpen, onClick }) => (
+  <div className="perspective-container">
+    <div className="card-oblique glowing-border-follow border-b border-gray-200 py-1 transition-all duration-300">
+      <button onClick={onClick} className="w-full text-left flex justify-between items-center p-6 text-lg text-gray-900">
+        <span className="font-semibold">{faq.question}</span>
+        <span className="ml-6 h-7 flex items-center">
+          <svg className={`h-6 w-6 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+      </button>
+      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
+        <div className="px-6 pb-6 text-base text-gray-700 prose">
+          <p>{faq.answer}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 
 export default function FAQ() {
+  const { t } = useTranslation('pages');
   const [open, setOpen] = useState<number | null>(0);
+  
+  const handleToggle = (index: number) => {
+    setOpen(open === index ? null : index);
+  };
+
+  // Ottieni le FAQ dalle traduzioni
+  const faqItems = t('faq.items', { returnObjects: true }) as any[];
+
   return (
     <section id="faq" className="section bg-slate-50">
       <div className="container">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6">Domande frequenti</h2>
-        <div className="grid gap-3">
-          {qa.map((item, i)=> (
-            <div key={i} className="perspective-container">
-              <div className="card-oblique glowing-border card">
-                <button className="w-full text-left font-semibold flex justify-between items-center" onClick={()=>setOpen(open===i?null:i)} aria-expanded={open===i}>
-                  {item.q} <span>{open===i ? "−" : "+"}</span>
-                </button>
-                {open===i && <p className="text-slate-600 mt-2">{item.a}</p>}
-              </div>
-            </div>
-          ))}
-        </div>
+        <AnimateOnScroll>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('faq.title')}</h2>
+        </AnimateOnScroll>
+        <AnimateOnScroll>
+          <div className="space-y-4">
+            {faqItems.map((item: any, i: number) => (
+              <FaqItem
+                key={i}
+                faq={item}
+                isOpen={open === i}
+                onClick={() => handleToggle(i)}
+              />
+            ))}
+          </div>
+        </AnimateOnScroll>
       </div>
     </section>
   );

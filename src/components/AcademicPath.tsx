@@ -1,16 +1,14 @@
-const steps = [
-  { pct: 50, title: "Settembre", desc: "Segui il programma" },
-  { pct: 65, title: "Dicembre", desc: "Ricorda le lacune" },
-  { pct: 80, title: "Marzo", desc: "Anticipa le difficoltà" },
-  { pct: 95, title: "Giugno", desc: "Esami superati" },
-  { pct: 100, title: "Estate", desc: "Pieno potenziale" },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function AcademicPath() {
+  const { t } = useTranslation('pages');
+  
+  const steps = t('academicPathSimple.steps', { returnObjects: true }) as any[];
+
   return (
     <section className="section">
       <div className="container">
-        <h2 className="text-3xl md:text-4xl font-bold mb-8">Percorso accademico</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-8">{t('academicPathSimple.title')}</h2>
         <div className="grid md:grid-cols-5 gap-4">
           {steps.map((s, i)=> (
             <div key={i} className="perspective-container">
@@ -25,7 +23,7 @@ export default function AcademicPath() {
         
         {/* Grafico a barre del progresso */}
         <div className="mt-12">
-          <h3 className="text-2xl font-bold mb-6 text-center">Progresso nel Tempo</h3>
+          <h3 className="text-2xl font-bold mb-6 text-center">{t('academicPathSimple.progressTitle')}</h3>
           <div className="flex items-end justify-center gap-4 h-48">
             {steps.map((s, i) => (
               <div key={i} className="flex flex-col items-center">

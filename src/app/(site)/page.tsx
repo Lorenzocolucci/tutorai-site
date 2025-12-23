@@ -8,21 +8,27 @@ import Testimonials from "@/components/sections/Testimonials";
 import Blog from "@/components/sections/Blog";
 import FAQ from "@/components/sections/FAQ";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll"; 
-import Link from "next/link";
-import Button from "@/components/ui/Button";
+import HomePageCTAs from "@/components/sections/HomePageCTAs";
+import { generateSEOMetadata } from "@/lib/seo";
 
-// NUOVO COMPONENTE PER I DATI STRUTTURATI
+export const metadata = generateSEOMetadata('home', 'it');
+
+// NUOVO COMPONENTE PER I DATI STRUTTURATI - ENHANCED CON LOCAL BUSINESS
 const HomePageStructuredData = () => {
-  const schema = {
+  const organizationSchema = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "EducationalOrganization",
     "name": "TutorAI",
-    "url": "https://www.mytutorai.app", // SOSTITUISCI CON IL TUO DOMINIO FINALE
-    "logo": "https://www.mytutorai.app/assets/logo.png", // CREA E CARICA UN LOGO QUI
+    "url": "https://www.mytutorai.app",
+    "logo": "https://www.mytutorai.app/assets/logo.png",
+    "description": "Tutor intelligente personalizzato per studenti italiani. 15+ anni di esperienza nell'educazione.",
+    "foundingDate": "2009",
     "contactPoint": {
       "@type": "ContactPoint",
       "email": "info@mytutorai.app",
-      "contactType": "Customer Service"
+      "contactType": "Customer Service",
+      "areaServed": "IT",
+      "availableLanguage": ["Italian", "English"]
     },
     "sameAs": [
       // INSERISCI QUI I LINK AI TUOI PROFILI SOCIAL
@@ -31,11 +37,47 @@ const HomePageStructuredData = () => {
     ]
   };
 
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "TutorAI",
+    "description": "Servizi di tutoring personalizzato con intelligenza artificiale per studenti italiani",
+    "url": "https://www.mytutorai.app",
+    "areaServed": "Italy",
+    "serviceType": "Educational Services",
+    "priceRange": "€€",
+    "hasCredential": "15+ anni di esperienza nell'educazione",
+    "knowsAbout": [
+      "Tutoring personalizzato",
+      "Intelligenza artificiale educativa",
+      "Metodi di studio innovativi",
+      "Supporto scolastico",
+      "Apprendimento adattivo"
+    ],
+    "serviceArea": {
+      "@type": "Country",
+      "name": "Italy"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "6",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  };
+
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
+    </>
   );
 };
 
@@ -47,30 +89,11 @@ export default function Home() {
       <AnimateOnScroll><Features /></AnimateOnScroll>
       <AnimateOnScroll><AcademicPath /></AnimateOnScroll>
       <AnimateOnScroll><ROI /></AnimateOnScroll>
-      
-      {/* SEZIONE ABOUT US (TEASER) */}
-      <AnimateOnScroll>
-        <AboutUs />
-        <div className="text-center pb-20 bg-slate-900">
-            <Button href="/chi-siamo" variant="outline" className="!border-white !text-white hover:!bg-white hover:!text-primary">
-                Leggi tutta la nostra storia
-            </Button>
-        </div>
-      </AnimateOnScroll>
-
+      <HomePageCTAs />
       <AnimateOnScroll><Curricula /></AnimateOnScroll>
       <AnimateOnScroll><Testimonials /></AnimateOnScroll>
       <AnimateOnScroll><Blog /></AnimateOnScroll>
-
-      {/* SEZIONE FAQ (TEASER) */}
-      <AnimateOnScroll>
-        <FAQ />
-        <div className="text-center pb-20 bg-white">
-            <Button href="/faq" variant="secondary">
-                Vedi tutte le domande
-            </Button>
-        </div>
-      </AnimateOnScroll>
+      <AnimateOnScroll><FAQ /></AnimateOnScroll>
     </>
   );
 }

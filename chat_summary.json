@@ -1,0 +1,148 @@
+{
+  "conversation_summary": {
+    "session_id": "tutorai-site-restoration-2024",
+    "timestamp": "2024-12-27T21:12:00Z",
+    "project_context": {
+      "original_project": "tutorai-site",
+      "backup_project": "tutorai-site_backup_27.08_ore_17.42",
+      "final_backup": "tutorai-site-backup-27.12core-21.12",
+      "current_status": "sostituzione_completa_in_corso",
+      "firebase_deployed": true,
+      "domain": "existing_firebase_domain"
+    },
+    "key_achievements": [
+      "Risoluzione completa problemi mobile UX",
+      "Implementazione soluzione definitiva per modali con React Portals",
+      "Correzione animazioni Hero section",
+      "Ripristino frasi originali Hero con sequenza corretta",
+      "Creazione backup di sicurezza finale",
+      "Sostituzione parziale progetto completata"
+    ],
+    "technical_fixes_applied": {
+      "mobile_ux_issues": {
+        "popup_positioning": "Risolto con React Portals e createPortal",
+        "scroll_management": "Implementato CSS Custom Properties per scroll locking",
+        "hero_animation": "Corretto layout shift con dynamic height calculation",
+        "touch_interference": "Risolto con touchAction: 'none' e preventDefault",
+        "viewport_management": "Aggiornato layout.tsx con viewport export",
+        "roi_responsive": "Adattato grafici per mobile con isMobile detection"
+      },
+      "modal_system": {
+        "architecture": "React Portals con createPortal",
+        "scroll_management": "CSS Custom Properties (--scroll-y, --modal-open)",
+        "accessibility": "Focus trap, ARIA attributes, keyboard navigation",
+        "design": "Gradient styling con bg-gradient-to-br from-white via-gray-50 to-white",
+        "components_updated": [
+          "src/components/ui/Modal.jsx",
+          "src/components/ui/ContactModal.jsx", 
+          "src/app/(site)/blog/page.tsx"
+        ]
+      },
+      "hero_section": {
+        "animated_text": {
+          "phrases": [
+            "Un'IA che si adatta alla TUA mente.",
+            "Apprendimento personale, per tutti.",
+            "Cambia il tutor, non te stesso.",
+            "Passa a Tutor.AI"
+          ],
+          "timing": "4 secondi per frase",
+          "special_styling": "Tutor.AI in bianco, resto in viola",
+          "mobile_fix": "whiteSpace: 'normal', wordBreak: 'break-word', lineHeight: '1.2'"
+        },
+        "cognitive_core": "Touch events disabilitati per prevenire interferenza scroll"
+      },
+      "css_animations": {
+        "restored": "Tutte le animazioni CSS in globals.css",
+        "mobile_optimizations": "Font-size inputs, min-height/width, overscroll-behavior"
+      }
+    },
+    "current_problem": {
+      "type": "build_error",
+      "description": "TypeScript error in admin dashboard - Property 'type' does not exist on Modal component",
+      "location": "src/app/admin/dashboard/page.tsx:417",
+      "error_message": "type={modal.type === 'confirm' ? 'danger' : 'info'}",
+      "root_cause": "Cache TypeScript - file corretto ma compilatore vede versione vecchia",
+      "attempted_solutions": [
+        "Rimozione prop type dal Modal",
+        "Ricreazione file da zero",
+        "Pulizia cache .next",
+        "Verifica file duplicati"
+      ]
+    },
+    "proposed_solution": {
+      "user_idea": "Rinominare cartelle per sostituzione completa",
+      "steps": [
+        "tutorai-site → tutorai-site-vecchio",
+        "tutorai-site_backup_27.08_ore_17.42 → tutorai-site",
+        "Deploy dalla nuova cartella"
+      ],
+      "advantages": [
+        "Elimina problemi di cache",
+        "Mantiene configurazioni Firebase",
+        "Soluzione definitiva e pulita"
+      ],
+      "verifications_needed": [
+        "Configurazioni Firebase (.firebaserc, firebase.json)",
+        "Dipendenze package.json",
+        "Variabili d'ambiente",
+        "Test build nella nuova cartella"
+      ]
+    },
+    "file_structure": {
+      "backup_created": "tutorai-site-backup-27.12core-21.12",
+      "configurations_saved": [
+        ".firebaserc.backup",
+        "firebase.json.backup", 
+        "package.json.backup"
+      ],
+      "files_copied": [
+        "src/ (57 files)",
+        "public/",
+        "package.json",
+        "next.config.js"
+      ],
+      "configurations_restored": [
+        ".firebaserc",
+        "firebase.json"
+      ]
+    },
+    "admin_dashboard": {
+      "password": "TutorAIAdmin2025",
+      "status": "file_ricreato_senza_errori",
+      "functionality": "Gestione richieste beta, approvazioni, cancellazioni"
+    },
+    "deployment_status": {
+      "original_site": "Deployato su Firebase",
+      "backup_site": "Pronto per deploy",
+      "next_step": "Sostituzione cartelle e deploy finale"
+    },
+    "critical_files": {
+      "layout": "src/app/layout.tsx - viewport configurato",
+      "globals_css": "src/styles/globals.css - animazioni e modal scroll fix",
+      "hero": "src/components/sections/Hero.jsx - frasi e animazioni corrette",
+      "modal": "src/components/ui/Modal.jsx - React Portals implementato",
+      "roi": "src/components/sections/ROI.jsx - responsive per mobile",
+      "blog": "src/app/(site)/blog/page.tsx - modali funzionanti"
+    },
+    "mobile_optimizations_completed": {
+      "viewport": "Configurato per pinch-to-zoom e device notches",
+      "touch_events": "Gestiti per prevenire interferenza scroll",
+      "responsive_design": "Tutti i componenti adattati per mobile",
+      "layout_shifts": "Eliminati con dynamic height calculation",
+      "popup_positioning": "Sempre centrati con React Portals"
+    },
+    "next_actions": {
+      "immediate": "Verificare configurazioni Firebase nel backup",
+      "short_term": "Eseguire sostituzione cartelle",
+      "medium_term": "Test build e deploy dalla nuova cartella",
+      "verification": "Testare funzionamento online"
+    },
+    "important_notes": {
+      "firebase_config": "Mantenere project ID esistente",
+      "domain": "Rimarrà lo stesso dopo sostituzione",
+      "data_preservation": "Dati Firebase non influenzati dalla sostituzione",
+      "rollback": "Possibile con cartella rinominata"
+    }
+  }
+}

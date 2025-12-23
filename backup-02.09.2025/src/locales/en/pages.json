@@ -1,0 +1,394 @@
+{
+  "home": {
+    "hero": {
+      "title": "Don't change the way you learn.",
+      "rotatingPhrases": [
+        "An AI that adapts to YOUR mind.",
+        "Personal learning, for everyone.",
+        "Change the tutor, not yourself.",
+        "Switch to Tutor.AI"
+      ],
+      "description": "TutorAI is the first intelligent tutor that adapts to your cognitive style. Forget ineffective study hours. Start a personalized learning journey that truly works for you.",
+      "cta": {
+        "primary": "🚀 Request Beta Access",
+        "secondary": "Discover Features"
+      },
+      "betaNote": "✨ Limited Beta Access spots."
+    },
+    "features": {
+      "title": "Why Choose TutorAI",
+      "subtitle": "Cutting-edge technology for the education of the future",
+      "items": [
+        {
+          "title": "Advanced Cognitive Analysis",
+          "description": "AI analyzes your learning style and creates a personalized path that adapts to your specific needs.",
+          "detailedDescription": "TutorAI uses advanced machine learning algorithms to analyze your cognitive style, gaps, and strengths. The AI creates a unique learning profile that is constantly updated based on your progress. This allows customization of every lesson, exercise, and explanation to maximize your understanding and retention."
+        },
+        {
+          "title": "Intelligent Gap Recovery",
+          "description": "Automatically identifies and fills gaps in your knowledge, building a solid foundation for the future.",
+          "detailedDescription": "The system automatically identifies gaps in your knowledge through intelligent diagnostic tests and performance analysis. Once identified, TutorAI creates a targeted recovery path that fills these gaps progressively and logically. This approach ensures there are no 'holes' in your preparation that could compromise future learning."
+        },
+        {
+          "title": "Realistic Test Simulations",
+          "description": "Face tests with confidence thanks to simulations that perfectly replicate the exam environment.",
+          "detailedDescription": "TutorAI creates test simulations that faithfully replicate the exam environment, including difficulty levels, timing, and question types. This allows you to familiarize yourself with the format and reduce performance anxiety. The simulations are adaptive: if you make mistakes, the system provides detailed explanations and suggests similar exercises to reinforce understanding."
+        },
+        {
+          "title": "Anxiety and Stress Management",
+          "description": "Relaxation techniques and mental strategies to serenely face every academic challenge.",
+          "detailedDescription": "TutorAI includes specific modules for managing study-related anxiety and stress. Through breathing techniques, mindfulness, and coping strategies, the system helps you maintain calm and focus. These tools are particularly useful before important exams or when tackling complex topics."
+        },
+        {
+          "title": "School Support Network",
+          "description": "Connect with a community of students and receive support when you need it.",
+          "detailedDescription": "TutorAI is not just an AI: it's part of a complete educational ecosystem. You can connect with other students facing the same challenges, share study strategies, and receive moral support. The platform also includes access to specialized human tutors for when you need additional personalized support."
+        },
+        {
+          "title": "Monitored Progress",
+          "description": "Track your improvements with detailed analytics and celebrate every milestone achieved.",
+          "detailedDescription": "TutorAI's advanced tracking system monitors every aspect of your learning: time dedicated, topics completed, performance improvements, and skills acquired. This data is presented through intuitive dashboards that help you visualize your progress and stay motivated in your study journey."
+        }
+      ],
+      "modal": {
+        "close": "Close"
+      }
+    },
+    "testimonials": {
+      "title": "Stories of those who already made it",
+      "subtitle": "Real students who transformed their performance and confidence.",
+      "cta": {
+        "readAll": "Read all testimonials →",
+        "startYou": "Start your journey too"
+      },
+      "grades": {
+        "before": "Before",
+        "after": "After"
+      },
+      "data": [
+        {
+          "name": "Marco S.",
+          "age": 17,
+          "city": "Rome",
+          "school": "Liceo Classico Giulio Cesare - Rome",
+          "subject": "Mathematics",
+          "quote": "\"I struggled with math forever. TutorAI understood that I think in images and started explaining concepts through art examples. In 4 months I went from total panic to stable passing grades.\"",
+          "grade_before": 4.5,
+          "grade_after": 6.2,
+          "timeframe": "February - June 2024",
+          "imageUrl": "/assets/testimonials/avatar-marco.jpg",
+          "alt": "Portrait of Marco S., 17-year-old student at Liceo Classico Giulio Cesare",
+          "verified": true,
+          "badge": "Rome Center"
+        },
+        {
+          "name": "Sofia C.",
+          "age": 16,
+          "city": "Milan",
+          "school": "International School of Milan - IB Programme",
+          "subject": "Chemistry",
+          "quote": "\"The IB program is brutal and my dad was spending €800/month on tutoring. TutorAI knows exactly the Cambridge syllabus and in 6 months I recovered everything. My parents are amazed by the savings.\"",
+          "grade_before": 4.2,
+          "grade_after": 5.8,
+          "timeframe": "October 2023 - April 2024",
+          "imageUrl": "/assets/testimonials/avatar-sofia.jpg",
+          "alt": "Portrait of Sofia C., IB student at International School Milan",
+          "verified": true,
+          "badge": "Milan North"
+        },
+        {
+          "name": "Leonardo C.",
+          "age": 13,
+          "city": "Bologna",
+          "school": "I.C. Guinizelli - Middle School",
+          "subject": "Mathematics",
+          "quote": "\"I was afraid to ask questions in class because everyone was smarter. With TutorAI I can make mistakes without shame and repeat until I understand. Now I even raise my hand in class.\"",
+          "grade_before": 5.2,
+          "grade_after": 6.8,
+          "timeframe": "January - May 2024",
+          "imageUrl": "/assets/testimonials/avatar-leonardo.jpg",
+          "alt": "Portrait of Leonardo C., 13-year-old student at I.C. Guinizelli Bologna",
+          "verified": true,
+          "badge": "Bologna Center"
+        },
+        {
+          "name": "Giulia R.",
+          "age": 18,
+          "city": "Naples",
+          "school": "Liceo Scientifico Mercalli - Naples",
+          "subject": "Final Exam Preparation",
+          "quote": "\"I was terrified of the math final exam. TutorAI's simulations made me practice hundreds of similar exercises. Result: 85/100 in math when I hoped for just passing.\"",
+          "grade_before": 5.8,
+          "grade_after": 7.9,
+          "timeframe": "January - June 2024",
+          "imageUrl": "/assets/testimonials/avatar-giulia.jpg",
+          "alt": "Portrait of Giulia R., graduate of Liceo Scientifico Mercalli Naples",
+          "verified": true,
+          "badge": "Class of 2024"
+        },
+        {
+          "name": "Adam B.",
+          "age": 15,
+          "city": "Turin",
+          "school": "International School of Turin - IGCSE",
+          "subject": "English Literature",
+          "quote": "\"My family is of Moroccan origin and English was never my strength. TutorAI helped me with essay writing and literary analysis. Now I'm not afraid of oral exams anymore.\"",
+          "grade_before": 5.5,
+          "grade_after": 7.1,
+          "timeframe": "September 2023 - March 2024",
+          "imageUrl": "/assets/testimonials/avatar-adam.jpg",
+          "alt": "Portrait of Adam B., IGCSE student at International School Turin",
+          "verified": true,
+          "badge": "Turin West"
+        },
+        {
+          "name": "Elena F. (Alice's mom)",
+          "age": 9,
+          "city": "Florence",
+          "school": "Scuola Primaria Carducci - Florence",
+          "subject": "Mathematics",
+          "quote": "\"Alice hated homework and every evening was screaming and tears. With TutorAI it became a game: colorful explanations with drawings and infinite patience. Now she does homework alone and I can relax.\"",
+          "grade_before": 6.0,
+          "grade_after": 7.8,
+          "timeframe": "March - July 2024",
+          "imageUrl": "/assets/testimonials/avatar-elena-alice.jpg",
+          "alt": "Photo of Elena F. with her daughter Alice, 9 years old, Carducci School Florence",
+          "verified": true,
+          "isParent": true,
+          "badge": "Verified Parent"
+        }
+      ],
+      "stats": [
+        {
+          "value": "89%",
+          "label": "Grade improvement"
+        },
+        {
+          "value": "75%",
+          "label": "Study time reduction"
+        },
+        {
+          "value": "91%",
+          "label": "More motivated students"
+        },
+        {
+          "value": "Up to 76%",
+          "label": "Economic savings"
+        }
+      ]
+    },
+    "academicPath": {
+      "title": "The transformation journey with TutorAI",
+      "subtitle": "From unexpressed potential to maximum performance. A path that builds and comes alive before your eyes.",
+      "cta": "Learn more...",
+      "steps": [
+        {
+          "title": "September - Starting Point (Without TutorAI)",
+          "description": "Potential blocked by previous year's knowledge gaps.",
+          "detailedDescription": "It's the beginning of the academic year. The student starts with unresolved uncertainties and difficulties. Their potential is 50%, hindered by an incomplete knowledge base that makes them vulnerable to new topics."
+        },
+        {
+          "title": "December - Solid Foundations",
+          "description": "TutorAI constantly reinforces the fundamentals.",
+          "detailedDescription": "After three months with TutorAI, the initial gaps have been almost completely filled. The AI has created a personalized recovery path. Now the student not only keeps up with the class, but does so with new confidence. Potential rises to 65%."
+        },
+        {
+          "title": "March - Full Performance",
+          "description": "Confidence and method to face challenges.",
+          "detailedDescription": "The student has developed an effective study method, optimized by TutorAI. Test simulations make them prepared and less anxious. Difficulties are anticipated and managed before they become problems. Potential reaches 80%."
+        },
+        {
+          "title": "June - Exams Conquered",
+          "description": "Better results, with less stress.",
+          "detailedDescription": "Final preparation is strategic. TutorAI helps manage anxiety, review the most critical topics and face exams with maximum clarity. Results are tangible, grades improve. Potential touches 95%."
+        },
+        {
+          "title": "Next September - Decisive Advantage",
+          "description": "Starting from a completely new level.",
+          "detailedDescription": "After a full year and intelligent summer review, the student has not only consolidated all knowledge but also anticipated future topics. They don't start from zero. They start from 100% of their potential, with a huge competitive advantage."
+        }
+      ]
+    },
+    "roi": {
+      "title": "Stop paying for ineffective private lessons",
+      "subtitle": "Use the sliders to compare the annual cost of traditional tutoring with TutorAI and discover your savings.",
+      "calculator": {
+        "hours": "Tutoring hours / week",
+        "subjects": "Number of subjects",
+        "costPerHour": "Average hourly cost",
+        "units": {
+          "hours": "hours",
+          "subjects": "subjects",
+          "perHour": "/ hour"
+        }
+      },
+      "comparison": {
+        "traditional": {
+          "title": "❌ Traditional Tutoring",
+          "subtitle": "Estimated Annual Cost",
+          "features": {
+            "0": "- Same method for everyone",
+            "1": "- No memory of difficulties",
+            "2": "- Fixed and inconvenient schedules"
+          }
+        },
+        "tutorAI": {
+          "title": "✅ TutorAI",
+          "subtitle": "Fixed Annual Cost",
+          "features": {
+            "0": "+ 100% personalized method",
+            "1": "+ Complete memory of progress",
+            "2": "+ Available 24/7, anywhere"
+          }
+        }
+      },
+      "savings": {
+        "title": "Your Total Savings",
+        "subtitle": "Equal to {{percentage}}% savings every year!"
+      },
+      "visualComparison": {
+        "title": "Visual Cost Comparison",
+        "labels": {
+          "traditional": "Traditional",
+          "tutorAI": "TutorAI",
+          "savings": "Savings"
+        },
+        "chartLabels": {
+          "annualCost": "Annual Cost",
+          "annualSavings": "Annual Savings"
+        }
+      },
+      "stats": {
+        "percentageSaved": "Percentage Saved",
+        "hoursEquivalent": "Lesson Hours Saved",
+        "weeksOfWork": "Work Weeks"
+      }
+    },
+    "curricula": {
+      "title": "We speak your school's language",
+      "subtitle": "Click on an educational system to discover how TutorAI perfectly adapts to your curriculum.",
+      "supportedSubjects": "Supported Subjects",
+      "subjects": [
+        "Mathematics", "Physics", "Chemistry", "Biology", "English", "History", "Philosophy",
+        "Latin", "Economics", "Law", "Computer Science", "and many more..."
+      ],
+      "systems": [
+        {
+          "name": "Italian System",
+          "detail": "MIUR",
+          "description": "Complete support for the Italian national curriculum, from middle school to final exams. TutorAI knows the specifics of each track: High Schools (Classical, Scientific, Linguistic), Technical and Professional Institutes."
+        },
+        {
+          "name": "IGCSE / UK System",
+          "detail": "Cambridge",
+          "description": "Perfectly aligned with Cambridge International (IGCSE) and British system (GCSE, A-Levels) programs. Ideal for students in international schools or planning to study in the UK."
+        },
+        {
+          "name": "International Baccalaureate",
+          "detail": "IB - MYP & DP",
+          "description": "TutorAI understands the philosophy and structure of the IB, both for the Middle Years Programme (MYP) and Diploma Programme (DP). Essential support for a demanding and interdisciplinary study path."
+        },
+        {
+          "name": "American K-12",
+          "detail": "AP & SAT",
+          "description": "Complete support for the American educational system, from elementary (K-5) to high school (9-12), including Advanced Placement (AP) courses and SAT/ACT test preparation."
+        },
+        {
+          "name": "AEFE (French)",
+          "detail": "Baccalauréat",
+          "description": "Specialized support for the French educational system and Baccalauréat, ideal for students in French schools abroad or planning to study in France."
+        },
+        {
+          "name": "Gymnasium",
+          "detail": "Abitur",
+          "description": "Support for the German educational system, from Gymnasium to Abitur, with particular attention to German methodology and standards."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Questions? We have answers.",
+      "subtitle": "The most frequently asked questions to immediately start the revolution of your study.",
+      "cta": "View all questions",
+      "items": [
+        {
+          "question": "What is TutorAI in practice?",
+          "answer": "It's your personal tutor available 24/7. It's not a database of videos or exercises, but an artificial intelligence that dialogues with you, understands your difficulties and creates explanations, exercises and study plans tailored to you, in real time."
+        },
+        {
+          "question": "We are in beta phase, what does this mean for me?",
+          "answer": "It means you'll have early and free access to the platform in exchange for your feedback. You'll help us perfect the service before the official launch. Spots are limited to ensure high quality support for each beta tester."
+        },
+        {
+          "question": "Does it replace a teacher or tutoring?",
+          "answer": "TutorAI is designed to be a powerful support tool that accompanies daily study. It replaces traditional tutoring by offering a more economical, always available and totally personalized alternative that adapts to the student's pace."
+        }
+      ]
+    },
+    "about": {
+      "cta": "Read our full story"
+    },
+    "blog": {
+      "title": "Our Blog",
+      "subtitle": "Articles, insights and advice for students, parents and teachers. Discover the latest news in education and artificial intelligence.",
+      "cta": {
+        "readArticle": "Read article",
+        "viewAll": "View all articles"
+      },
+      "readTime": "read"
+    }
+  },
+  "about": {
+    "title": "An artificial intelligence with an educator's soul",
+    "subtitle": "Born in a classroom, not in a lab",
+    "description": "We didn't start from an algorithm, but from 15 years of experience in classrooms. We combined psychology, neuroscience and the most advanced AI to create not just a tool, but a true learning partner."
+  },
+  "blog": {
+    "title": "TutorAI Blog",
+    "subtitle": "Insights on education, technology and learning",
+    "searchPlaceholder": "Search articles...",
+    "readingTime": "min read",
+    "readComplete": "Read Full Article",
+    "backToBlog": "Back to Blog"
+  },
+  "testimonials": {
+    "title": "TutorAI Student Testimonials",
+    "subtitle": "Real stories of academic success",
+    "filters": {
+      "all": "All",
+      "age": "Age",
+      "subject": "Subject",
+      "city": "City"
+    },
+    "verified": "Verified",
+    "improvement": "Improvement"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have questions? We're here to help",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send Message"
+    }
+  },
+  "footer": {
+    "description": "The first intelligent tutor that adapts to your cognitive style. Transform the way you learn with artificial intelligence.",
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "about": "About Us",
+      "blog": "Blog",
+      "faq": "FAQ"
+    },
+    "contact": {
+      "title": "Contact",
+      "writeUs": "📧 Write to Us",
+      "email": "info@mytutorai.app",
+      "support": "24/7 Support"
+    },
+    "copyright": "© 2025 TutorAI. All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  }
+}

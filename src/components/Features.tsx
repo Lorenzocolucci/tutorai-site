@@ -1,17 +1,14 @@
-const features = [
-  { title: "Spiegazioni ultra chiare", desc: "Esempi, ritmo e linguaggio su misura.", emoji: "🧩" },
-  { title: "Esercizi mirati", desc: "Difficoltà adattiva con feedback immediato.", emoji: "🎯" },
-  { title: "Recupero lacune", desc: "Identifica e rinforza i concetti deboli.", emoji: "🧭" },
-  { title: "Preparazione test", desc: "Simulazioni realistiche e strategie.", emoji: "🏆" },
-  { title: "Progresso continuo", desc: "Tracking e ricalibrazione costante.", emoji: "🔁" },
-  { title: "Motivazione costante", desc: "Supporto emotivo e micro-ricompense.", emoji: "⭐" },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function Features() {
+  const { t } = useTranslation('pages');
+  
+  const features = t('featuresSimple.items', { returnObjects: true }) as any[];
+
   return (
     <section id="features" className="section">
       <div className="container">
-        <h2 className="text-3xl md:text-4xl font-bold mb-8">Cosa rende TutorAI diverso</h2>
+        <h2 className="text-3xl md:text-4xl font-bold mb-8">{t('featuresSimple.title')}</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {features.map((f, i)=> (
             <div key={i} className="perspective-container">

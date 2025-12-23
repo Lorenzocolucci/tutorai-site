@@ -1,0 +1,62 @@
+{
+  "header": {
+    "nav": {
+      "home": "Home",
+      "features": "Features",
+      "curricula": "Curricula",
+      "about": "Chi Siamo",
+      "blog": "Blog", 
+      "testimonials": "Testimonianze",
+      "contact": "Contatti",
+      "faq": "FAQ"
+    },
+    "cta": {
+      "login": "Login",
+      "betaAccess": "Richiedi Accesso Beta",
+      "tryNow": "Prova Ora"
+    },
+    "language": {
+      "switch": "Cambia lingua",
+      "italian": "Italiano",
+      "english": "English"
+    }
+  },
+  "footer": {
+    "company": "TutorAI",
+    "description": "Il futuro dell'educazione personalizzata",
+    "links": {
+      "about": "Chi Siamo",
+      "privacy": "Privacy",
+      "terms": "Termini",
+      "contact": "Contatti"
+    },
+    "social": {
+      "follow": "Seguici",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn"
+    },
+    "copyright": "© 2025 TutorAI. Tutti i diritti riservati."
+  },
+  "buttons": {
+    "learnMore": "Scopri di Più",
+    "readMore": "Leggi di Più",
+    "getStarted": "Inizia Ora",
+    "contact": "Contattaci",
+    "submit": "Invia",
+    "cancel": "Annulla",
+    "close": "Chiudi",
+    "back": "Indietro",
+    "next": "Avanti"
+  },
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "success": "Successo",
+    "warning": "Attenzione",
+    "info": "Informazione",
+    "age": "anni",
+    "verified": "Verificata",
+    "progress": "Progresso"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "header": {
+    "nav": {
+      "home": "Home",
+      "features": "Features",
+      "howItWorks": "Come Funziona",
+      "curricula": "Curricula",
+      "about": "Chi Siamo",
+      "blog": "Blog", 
+      "testimonials": "Testimonianze",
+      "contact": "Contatti",
+      "faq": "FAQ"
+    },
+    "cta": {
+      "login": "Login",
+      "betaAccess": "Richiedi Accesso Beta",
+      "tryNow": "Prova Ora"
+    },
+    "language": {
+      "switch": "Cambia lingua",
+      "italian": "Italiano",
+      "english": "English"
+    }
+  },
+  "footer": {
+    "company": "TutorAI",
+    "description": "Il futuro dell'educazione personalizzata",
+    "links": {
+      "about": "Chi Siamo",
+      "privacy": "Privacy",
+      "terms": "Termini",
+      "contact": "Contatti"
+    },
+    "social": {
+      "follow": "Seguici",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn"
+    },
+    "copyright": "© 2025 TutorAI. Tutti i diritti riservati."
+  },
+  "buttons": {
+    "learnMore": "Scopri di Più",
+    "readMore": "Leggi di Più",
+    "getStarted": "Inizia Ora",
+    "contact": "Contattaci",
+    "submit": "Invia",
+    "cancel": "Annulla",
+    "close": "Chiudi",
+    "back": "Indietro",
+    "next": "Avanti"
+  },
+  "common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "success": "Successo",
+    "warning": "Attenzione",
+    "info": "Informazione",
+    "age": "anni",
+    "verified": "Verificata",
+    "progress": "Progresso"
+  },
+  "cookies": {
+    "title": "Utilizziamo i cookie",
+    "description": "Utilizziamo cookie per migliorare la tua esperienza di navigazione, personalizzare contenuti e analizzare il nostro traffico. Cliccando 'Accetta Tutti', acconsenti al nostro utilizzo dei cookie.",
+    "accept": "Accetta Tutti",
+    "decline": "Rifiuta",
+    "acceptAria": "Accetta tutti i cookie e continua la navigazione",
+    "declineAria": "Rifiuta cookie non essenziali"
+  }
+}
