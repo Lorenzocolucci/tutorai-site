@@ -6,12 +6,12 @@ export async function POST(request: NextRequest) {
     const { email, firstName, lastName, curriculum, classe, materie } = await request.json();
 
     const transporter = nodemailer.createTransport({
-      host: "smtps.aruba.it", // Host corretto Aruba
-      port: 465,
+      host: process.env.SMTP_HOST || "smtps.aruba.it",
+      port: parseInt(process.env.SMTP_PORT || "465"),
       secure: true, // SSL/TLS
       auth: {
-        user: "noreply@mytutorai.app",
-        pass: "Nor3ply-@1"
+        user: process.env.SMTP_USER || "noreply@mytutorai.app",
+        pass: process.env.SMTP_PASSWORD // NEVER hardcode passwords!
       }
     });
 
