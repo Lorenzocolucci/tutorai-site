@@ -337,7 +337,8 @@ const BetaAccessPage = () => {
           classe: formData.classe,
           materie: formData.materie,
           submittedBy: formData.userType,
-          notes: noteSections.length > 0 ? noteSections.join('\n') : null
+          notes: noteSections.length > 0 ? noteSections.join('\n') : null,
+          language: 'it'  // ENTERPRISE: Italian language for bilingual emails
         })
       });
 
