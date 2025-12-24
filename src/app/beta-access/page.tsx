@@ -20,7 +20,7 @@ const curriculaData = {
   internazionale: [
     { value: 'igcse', label: 'IGCSE', classes: ['Year 10', 'Year 11'] },
     { value: 'ib-diploma', label: 'IB Diploma Programme (DP)', classes: ['Year 1', 'Year 2'] },
-    { value: 'ib-myp', label: 'IB Middle Years Programme (MYP)', classes: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'] },
+    { value: 'ib-myp', label: 'IB Middle Years Programme (MYP)', classes: ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11'] },
   ]
 };
 
