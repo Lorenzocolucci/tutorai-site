@@ -8,7 +8,8 @@ const BetaLoginPage = () => {
 
   useEffect(() => {
     // Redirect to platform.mytutorai.app/login
-    const inviteCode = searchParams.get('invite');
+    // Accept both 'invite' and 'code' as parameter names
+    const inviteCode = searchParams.get('invite') || searchParams.get('code');
     const targetUrl = inviteCode
       ? `https://platform.mytutorai.app/login?invite=${inviteCode}`
       : 'https://platform.mytutorai.app/login';

@@ -257,6 +257,12 @@ const BetaAccessPage = () => {
   const [availableClasses, setAvailableClasses] = useState<string[]>([]);
   const [availableSubjects, setAvailableSubjects] = useState<typeof defaultSubjects>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [existingUserInfo, setExistingUserInfo] = useState<{
+    status: string;
+    message: string;
+    action: string;
+    login_url?: string;
+  } | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
 
@@ -333,7 +339,13 @@ const BetaAccessPage = () => {
       const payload = await response.json();
 
       if (payload?.already_exists) {
-        setError('You are already on the waiting list. We will contact you as soon as a spot is available!');
+        // Show custom UI for existing users instead of error
+        setExistingUserInfo({
+          status: payload.status || 'pending',
+          message: payload.message || 'You are already on the waiting list!',
+          action: payload.action || 'wait',
+          login_url: payload.login_url
+        });
       } else {
         setIsSubmitted(true);
       }
@@ -356,6 +368,38 @@ const BetaAccessPage = () => {
       default: return false;
     }
   };
+
+  // Show appropriate UI for existing users
+  if (existingUserInfo) {
+    const isLoginAction = existingUserInfo.action === 'login';
+    const statusConfig: Record<string, { icon: string; title: string; bg: string; border: string }> = {
+      invited: { icon: '🎫', title: 'You Have an Invite!', bg: 'bg-green-50', border: 'border-green-200' },
+      invited_expired: { icon: '⏰', title: 'Code Expired', bg: 'bg-yellow-50', border: 'border-yellow-200' },
+      registered: { icon: '✅', title: 'Welcome Back!', bg: 'bg-blue-50', border: 'border-blue-200' },
+      pending: { icon: '⏳', title: 'You\'re on the List!', bg: 'bg-purple-50', border: 'border-purple-200' }
+    };
+    const config = statusConfig[existingUserInfo.status] || statusConfig.pending;
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+        <div className={`${config.bg} border-2 ${config.border} rounded-3xl shadow-2xl p-8 max-w-md text-center`}>
+          <div className="text-6xl mb-6">{config.icon}</div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{config.title}</h1>
+          <p className="text-gray-700 mb-6 text-lg">{existingUserInfo.message}</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            {isLoginAction && existingUserInfo.login_url && (
+              <a href={existingUserInfo.login_url} className="bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors inline-flex items-center justify-center gap-2">
+                🚀 Go to Login
+              </a>
+            )}
+            <Link href="/en" className={`${isLoginAction ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' : 'bg-blue-600 text-white hover:bg-blue-700'} px-6 py-3 rounded-xl font-semibold transition-colors`}>
+              Back to Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (isSubmitted) {
     return (

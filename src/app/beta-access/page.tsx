@@ -279,6 +279,12 @@ const BetaAccessPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [existingUserInfo, setExistingUserInfo] = useState<{
+    status: string;
+    message: string;
+    action: string;
+    login_url?: string;
+  } | null>(null);
 
   const totalPlaces = 500;
   const usedPlaces = 342;
@@ -350,7 +356,13 @@ const BetaAccessPage = () => {
       const payload = await response.json();
 
       if (payload?.already_exists) {
-        setError('Sei già presente nella lista d\'attesa. Ti contatteremo appena sarà disponibile un posto!');
+        // Show custom UI for existing users instead of error
+        setExistingUserInfo({
+          status: payload.status || 'pending',
+          message: payload.message || 'Sei già nella lista d\'attesa!',
+          action: payload.action || 'wait',
+          login_url: payload.login_url
+        });
       } else {
         setIsSubmitted(true);
       }
@@ -384,7 +396,7 @@ const BetaAccessPage = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md text-center">
           <div className="text-6xl mb-4">🎉</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Richiesta Inviata!</h1>
@@ -394,6 +406,59 @@ const BetaAccessPage = () => {
           <Link href="/" className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors">
             Torna alla Home
           </Link>
+        </div>
+      </div>
+    );
+  }
+  
+  // Show appropriate UI for existing users
+  if (existingUserInfo) {
+    const isLoginAction = existingUserInfo.action === 'login';
+    const statusIcons: Record<string, string> = {
+      invited: '🎫',
+      invited_expired: '⏰',
+      registered: '✅',
+      pending: '⏳'
+    };
+    const statusColors: Record<string, { bg: string; border: string; icon: string }> = {
+      invited: { bg: 'bg-green-50', border: 'border-green-200', icon: 'text-green-600' },
+      invited_expired: { bg: 'bg-yellow-50', border: 'border-yellow-200', icon: 'text-yellow-600' },
+      registered: { bg: 'bg-blue-50', border: 'border-blue-200', icon: 'text-blue-600' },
+      pending: { bg: 'bg-purple-50', border: 'border-purple-200', icon: 'text-purple-600' }
+    };
+    const colors = statusColors[existingUserInfo.status] || statusColors.pending;
+    
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className={`${colors.bg} border-2 ${colors.border} rounded-2xl shadow-xl p-8 max-w-md text-center`}>
+          <div className={`text-6xl mb-4 ${colors.icon}`}>
+            {statusIcons[existingUserInfo.status] || '👋'}
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            {existingUserInfo.status === 'registered' ? 'Bentornato!' : 
+             existingUserInfo.status === 'invited' ? 'Hai un invito!' :
+             existingUserInfo.status === 'invited_expired' ? 'Codice Scaduto' :
+             'Sei nella Lista!'}
+          </h1>
+          <p className="text-gray-700 mb-6 text-lg">
+            {existingUserInfo.message}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            {isLoginAction && existingUserInfo.login_url && (
+              <a 
+                href={existingUserInfo.login_url}
+                className="bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors inline-flex items-center justify-center gap-2"
+              >
+                🚀 Vai al Login
+              </a>
+            )}
+            <Link 
+              href="/" 
+              className={`${isLoginAction ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' : 'bg-blue-600 text-white hover:bg-blue-700'} px-6 py-3 rounded-xl font-semibold transition-colors`}
+            >
+              Torna alla Home
+            </Link>
+          </div>
         </div>
       </div>
     );
