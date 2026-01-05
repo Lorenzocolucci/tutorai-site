@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
   secure: true, // SSL/TLS
   auth: {
     user: process.env.SMTP_USER || "noreply@mytutorai.app",
-    pass: process.env.SMTP_PASS || "Nor3ply-@1"
+    pass: process.env.SMTP_PASS
   }
 });
 

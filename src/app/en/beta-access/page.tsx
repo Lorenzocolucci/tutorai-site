@@ -306,6 +306,12 @@ const BetaAccessPage = () => {
     setIsSubmitting(true);
     setError('');
 
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.curriculum || !formData.class || formData.subjects.length === 0) {
+      setError('Please fill in all required fields and select at least one subject.');
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const normalizedCurriculum = mapCurriculumToWaitlist(formData.curriculum);
       const noteSections = [

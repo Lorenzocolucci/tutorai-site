@@ -286,8 +286,9 @@ const BetaAccessPage = () => {
     login_url?: string;
   } | null>(null);
 
+  // TODO: Fetch dinamicamente da API - attualmente hardcoded
   const totalPlaces = 500;
-  const usedPlaces = 342;
+  const usedPlaces = 342; // Aggiornare manualmente o implementare endpoint stats
   const availablePlaces = totalPlaces - usedPlaces;
   const completionPercentage = Math.round((usedPlaces / totalPlaces) * 100);
 
@@ -317,8 +318,8 @@ const BetaAccessPage = () => {
     setIsSubmitting(true);
     setError('');
 
-    if (!formData.nome || !formData.cognome || !formData.email || !formData.curriculum || !formData.classe) {
-      setError('Per favore, compila tutti i campi obbligatori.');
+    if (!formData.nome || !formData.cognome || !formData.email || !formData.curriculum || !formData.classe || formData.materie.length === 0) {
+      setError('Per favore, compila tutti i campi obbligatori e seleziona almeno una materia.');
       setIsSubmitting(false);
       return;
     }
