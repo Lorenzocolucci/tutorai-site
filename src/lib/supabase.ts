@@ -13,12 +13,21 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 export const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://tutor-agent-aff7.onrender.com';
 
 // Create Supabase client
+// For static export (SSG), env vars may not be available at build time
+// The client will be properly initialized at runtime in the browser
+const isBuildTime = typeof window === 'undefined' && !supabaseUrl;
+
 if (!supabaseUrl || !supabaseAnonKey) {
-  // NOTE: Avoid hardcoded secrets in repo. Ensure env vars are set in hosting (Vercel/Firebase/Render build).
-  console.warn('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Supabase client may not work.');
+  if (!isBuildTime) {
+    console.warn('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Supabase client may not work.');
+  }
 }
 
-export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '', {
+// Use placeholder during build, real values at runtime
+const clientUrl = supabaseUrl || 'https://placeholder.supabase.co';
+const clientKey = supabaseAnonKey || 'placeholder-key';
+
+export const supabase = createClient(clientUrl, clientKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,

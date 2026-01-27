@@ -164,7 +164,6 @@ const ContactPage = () => {
                       inputMode="text"
                       autoCapitalize="sentences"
                       autoCorrect="on"
-                      enterKeyHint="send"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                       placeholder="Tell us more about your question or how we can help..."
                     />

@@ -146,7 +146,6 @@ const ContactPage = () => {
                     inputMode="text"
                     autoCapitalize="sentences"
                     autoCorrect="on"
-                    enterKeyHint="send"
                     aria-describedby="messaggio-help"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                   />

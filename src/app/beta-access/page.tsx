@@ -587,7 +587,7 @@ const BetaAccessPage = () => {
                   <section>
                     <div className="mb-6">
                       <label className="block text-sm font-medium text-gray-700 mb-2">Perché vuoi partecipare alla Beta? *</label>
-                      <textarea name="motivazione" value={formData.motivazione} onChange={handleInputChange} required rows={4} placeholder="Raccontaci brevemente le tue aspettative e le difficoltà che stai affrontando..." inputMode="text" autoCapitalize="sentences" autoCorrect="on" enterKeyHint="done" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" />
+                      <textarea name="motivazione" value={formData.motivazione} onChange={handleInputChange} required rows={4} placeholder="Raccontaci brevemente le tue aspettative e le difficoltà che stai affrontando..." inputMode="text" autoCapitalize="sentences" autoCorrect="on" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" />
                     </div>
                     {error && (
                       <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">

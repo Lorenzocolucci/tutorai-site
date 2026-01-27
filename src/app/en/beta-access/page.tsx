@@ -548,7 +548,7 @@ const BetaAccessPage = () => {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Almost There!</h2>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Tell us about your learning goals (optional)</label>
-                  <textarea name="additionalInfo" rows={4} value={formData.additionalInfo} onChange={handleInputChange} inputMode="text" autoCapitalize="sentences" autoCorrect="on" enterKeyHint="done" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" placeholder="Tell us about your learning goals..." />
+                  <textarea name="additionalInfo" rows={4} value={formData.additionalInfo} onChange={handleInputChange} inputMode="text" autoCapitalize="sentences" autoCorrect="on" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" placeholder="Tell us about your learning goals..." />
                 </div>
                 {error && (
                   <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
