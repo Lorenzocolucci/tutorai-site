@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-200 py-10">
+    <footer className="border-t border-slate-200 py-10 safe-area-bottom">
       <div className="container grid md:grid-cols-4 gap-8 text-sm">
         <div>
           <div className="font-bold text-lg">TutorAI</div>

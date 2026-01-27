@@ -128,7 +128,7 @@ const ComeFunzionaPage = () => {
     ];
 
     return (
-        <div className="bg-gray-50 min-h-screen">
+        <div className="bg-gray-50 min-h-screen-safe">
             <ComeFunzionaStructuredData />
             
             {/* Hero Section with Background Image */}

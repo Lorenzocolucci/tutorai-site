@@ -21,27 +21,39 @@ export default function Header({ locale='it' }:{locale?:'it'|'en'}) {
         </nav>
         <button className="md:hidden px-3 py-2 border rounded-lg" onClick={()=>setOpen(true)} aria-label="Apri menu">☰</button>
       </div>
-      {open && (
-        <div role="dialog" aria-modal="true" className="fixed inset-0 bg-black/30 backdrop-blur-sm md:hidden" onClick={()=>setOpen(false)}>
-          <div className="absolute inset-x-4 top-4 rounded-2xl bg-white p-6 shadow-lift" onClick={e=>e.stopPropagation()}>
-            <div className="flex items-center justify-between mb-4">
-              <span className="font-bold text-lg">TutorAI</span>
-              <button onClick={()=>setOpen(false)} aria-label="Chiudi">✕</button>
-            </div>
-            <div className="grid gap-3 text-lg">
-              <a onClick={()=>setOpen(false)} href="#features">Features</a>
-              <a onClick={()=>setOpen(false)} href="#curricula">Curricula</a>
-              <a onClick={()=>setOpen(false)} href="#roi">ROI</a>
-              <a onClick={()=>setOpen(false)} href="#testimonials">Testimonials</a>
-              <a onClick={()=>setOpen(false)} href="#faq">FAQ</a>
-              <a onClick={()=>setOpen(false)} href="#pricing">Pricing</a>
-              <Link href={locale==='it'?'/en':'/'} className="px-3 py-1 rounded-lg border w-max">{locale==='it'?'EN':'IT'}</Link>
-              <button className="btn-ghost w-full">Login</button>
-              <a href="#waitlist" className="btn-primary w-full">Partecipa alla Beta</a>
-            </div>
+      {/* Mobile Menu with Animation */}
+      <div 
+        role="dialog" 
+        aria-modal="true" 
+        aria-hidden={!open}
+        className={`fixed inset-0 bg-black/30 backdrop-blur-sm md:hidden transition-opacity duration-200 ${
+          open ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`} 
+        onClick={()=>setOpen(false)}
+      >
+        <div 
+          className={`absolute inset-x-4 top-4 rounded-2xl bg-white p-6 shadow-lift transition-all duration-300 ease-out ${
+            open ? 'translate-y-0 opacity-100 scale-100' : '-translate-y-4 opacity-0 scale-95'
+          }`} 
+          onClick={e=>e.stopPropagation()}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <span className="font-bold text-lg">TutorAI</span>
+            <button onClick={()=>setOpen(false)} aria-label="Chiudi" className="p-2 -mr-2 hover:bg-gray-100 rounded-lg transition-colors">✕</button>
+          </div>
+          <div className="grid gap-3 text-lg">
+            <a onClick={()=>setOpen(false)} href="#features" className="hover:text-blue-600 transition-colors">Features</a>
+            <a onClick={()=>setOpen(false)} href="#curricula" className="hover:text-blue-600 transition-colors">Curricula</a>
+            <a onClick={()=>setOpen(false)} href="#roi" className="hover:text-blue-600 transition-colors">ROI</a>
+            <a onClick={()=>setOpen(false)} href="#testimonials" className="hover:text-blue-600 transition-colors">Testimonials</a>
+            <a onClick={()=>setOpen(false)} href="#faq" className="hover:text-blue-600 transition-colors">FAQ</a>
+            <a onClick={()=>setOpen(false)} href="#pricing" className="hover:text-blue-600 transition-colors">Pricing</a>
+            <Link href={locale==='it'?'/en':'/'} className="px-3 py-1 rounded-lg border w-max hover:bg-gray-50 transition-colors">{locale==='it'?'EN':'IT'}</Link>
+            <button className="btn-ghost w-full">Login</button>
+            <a href="#waitlist" className="btn-primary w-full">Partecipa alla Beta</a>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }

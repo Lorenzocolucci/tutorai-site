@@ -397,7 +397,7 @@ const BetaAccessPage = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen-safe bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md text-center">
           <div className="text-6xl mb-4">🎉</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Richiesta Inviata!</h1>
@@ -430,7 +430,7 @@ const BetaAccessPage = () => {
     const colors = statusColors[existingUserInfo.status] || statusColors.pending;
     
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen-safe bg-gray-50 flex items-center justify-center p-4">
         <div className={`${colors.bg} border-2 ${colors.border} rounded-2xl shadow-xl p-8 max-w-md text-center`}>
           <div className={`text-6xl mb-4 ${colors.icon}`}>
             {statusIcons[existingUserInfo.status] || '👋'}
@@ -466,7 +466,7 @@ const BetaAccessPage = () => {
   }
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen-safe bg-gray-50">
       <header className="bg-white/80 backdrop-blur-lg border-b border-gray-200/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
@@ -516,16 +516,16 @@ const BetaAccessPage = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Nome *</label>
-                        <input type="text" name="nome" value={formData.nome} onChange={handleInputChange} required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                        <input type="text" name="nome" value={formData.nome} onChange={handleInputChange} required inputMode="text" autoCapitalize="words" autoComplete="given-name" enterKeyHint="next" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Cognome *</label>
-                        <input type="text" name="cognome" value={formData.cognome} onChange={handleInputChange} required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                        <input type="text" name="cognome" value={formData.cognome} onChange={handleInputChange} required inputMode="text" autoCapitalize="words" autoComplete="family-name" enterKeyHint="next" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                       </div>
                     </div>
                     <div className="mb-6">
                       <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
-                      <input type="email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                      <input type="email" name="email" value={formData.email} onChange={handleInputChange} required inputMode="email" autoCapitalize="none" autoComplete="email" enterKeyHint="next" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                     </div>
                     <button onClick={nextStep} type="button" className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-colors">
                       Prossimo →
@@ -587,7 +587,7 @@ const BetaAccessPage = () => {
                   <section>
                     <div className="mb-6">
                       <label className="block text-sm font-medium text-gray-700 mb-2">Perché vuoi partecipare alla Beta? *</label>
-                      <textarea name="motivazione" value={formData.motivazione} onChange={handleInputChange} required rows={4} placeholder="Raccontaci brevemente le tue aspettative e le difficoltà che stai affrontando..." className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" />
+                      <textarea name="motivazione" value={formData.motivazione} onChange={handleInputChange} required rows={4} placeholder="Raccontaci brevemente le tue aspettative e le difficoltà che stai affrontando..." inputMode="text" autoCapitalize="sentences" autoCorrect="on" enterKeyHint="done" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" />
                     </div>
                     {error && (
                       <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">

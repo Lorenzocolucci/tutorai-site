@@ -35,7 +35,7 @@ const ContactPage = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen-safe bg-gray-50 flex items-center justify-center">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md text-center">
           <div className="text-6xl mb-4">✅</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Message Sent!</h1>
@@ -51,7 +51,7 @@ const ContactPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen-safe bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-6 py-12">
@@ -101,6 +101,10 @@ const ContactPage = () => {
                         required
                         value={formData.name}
                         onChange={handleInputChange}
+                        inputMode="text"
+                        autoCapitalize="words"
+                        autoComplete="name"
+                        enterKeyHint="next"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                         placeholder="Your full name"
                       />
@@ -117,6 +121,10 @@ const ContactPage = () => {
                         required
                         value={formData.email}
                         onChange={handleInputChange}
+                        inputMode="email"
+                        autoCapitalize="none"
+                        autoComplete="email"
+                        enterKeyHint="next"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                         placeholder="your@email.com"
                       />
@@ -134,6 +142,9 @@ const ContactPage = () => {
                       required
                       value={formData.subject}
                       onChange={handleInputChange}
+                      inputMode="text"
+                      autoCapitalize="sentences"
+                      enterKeyHint="next"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                       placeholder="How can we help you?"
                     />
@@ -150,6 +161,10 @@ const ContactPage = () => {
                       rows={6}
                       value={formData.message}
                       onChange={handleInputChange}
+                      inputMode="text"
+                      autoCapitalize="sentences"
+                      autoCorrect="on"
+                      enterKeyHint="send"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                       placeholder="Tell us more about your question or how we can help..."
                     />

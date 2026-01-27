@@ -387,7 +387,7 @@ const BetaAccessPage = () => {
     const config = statusConfig[existingUserInfo.status] || statusConfig.pending;
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+      <div className="min-h-screen-safe bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
         <div className={`${config.bg} border-2 ${config.border} rounded-3xl shadow-2xl p-8 max-w-md text-center`}>
           <div className="text-6xl mb-6">{config.icon}</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">{config.title}</h1>
@@ -409,7 +409,7 @@ const BetaAccessPage = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+      <div className="min-h-screen-safe bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md text-center">
           <div className="text-6xl mb-6">🎉</div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Welcome to TutorAI Beta!</h1>
@@ -423,7 +423,7 @@ const BetaAccessPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen-safe bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <div className="bg-white shadow-sm">
         <div className="container mx-auto px-6 py-8">
           <div className="max-w-4xl mx-auto text-center">
@@ -472,16 +472,16 @@ const BetaAccessPage = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">First Name *</label>
-                    <input type="text" name="firstName" required value={formData.firstName} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your first name" />
+                    <input type="text" name="firstName" required value={formData.firstName} onChange={handleInputChange} inputMode="text" autoCapitalize="words" autoComplete="given-name" enterKeyHint="next" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your first name" />
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">Last Name *</label>
-                    <input type="text" name="lastName" required value={formData.lastName} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your last name" />
+                    <input type="text" name="lastName" required value={formData.lastName} onChange={handleInputChange} inputMode="text" autoCapitalize="words" autoComplete="family-name" enterKeyHint="next" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your last name" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
-                  <input type="email" name="email" required value={formData.email} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="your@email.com" />
+                  <input type="email" name="email" required value={formData.email} onChange={handleInputChange} inputMode="email" autoCapitalize="none" autoComplete="email" enterKeyHint="next" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="your@email.com" />
                 </div>
               </div>
             )}
@@ -548,7 +548,7 @@ const BetaAccessPage = () => {
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Almost There!</h2>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Tell us about your learning goals (optional)</label>
-                  <textarea name="additionalInfo" rows={4} value={formData.additionalInfo} onChange={handleInputChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" placeholder="Tell us about your learning goals..." />
+                  <textarea name="additionalInfo" rows={4} value={formData.additionalInfo} onChange={handleInputChange} inputMode="text" autoCapitalize="sentences" autoCorrect="on" enterKeyHint="done" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" placeholder="Tell us about your learning goals..." />
                 </div>
                 {error && (
                   <div className="p-4 bg-red-50 border border-red-200 rounded-lg">

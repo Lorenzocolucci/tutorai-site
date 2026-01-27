@@ -159,7 +159,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           }}
         />
       )}
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen-safe bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm pt-20">
         <div className="container mx-auto px-6 py-8">

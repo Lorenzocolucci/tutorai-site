@@ -72,7 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${inter.variable} font-sans bg-background text-text-primary`}>
+      <body className={`${inter.variable} font-sans bg-background text-text-primary safe-area-top safe-area-bottom`}>
         {/* Schema.org JSON-LD */}
         <script
           type="application/ld+json"

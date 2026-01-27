@@ -139,7 +139,7 @@ const FAQPage = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen-safe">
       <FaqPageStructuredData faqData={faqData} />
       {/* Header */}
       <div className="bg-white shadow-sm">

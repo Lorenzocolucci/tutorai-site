@@ -43,7 +43,7 @@ const BetaLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center">
+    <div className="min-h-screen-safe bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center">
       <div className="perspective-container">
         <div className="card-oblique glowing-border-follow bg-white rounded-2xl shadow-2xl p-8 md:p-12 max-w-md w-full mx-4">
         {/* Header */}

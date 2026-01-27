@@ -35,7 +35,7 @@ const ContactPage = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen-safe bg-gray-50 flex items-center justify-center">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md text-center">
           <div className="text-6xl mb-4">✅</div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Messaggio Inviato!</h1>
@@ -51,7 +51,7 @@ const ContactPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen-safe bg-gray-50">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
         <div className="container mx-auto px-6 text-center">
@@ -82,6 +82,10 @@ const ContactPage = () => {
                       value={formData.nome}
                       onChange={handleInputChange}
                       required
+                      inputMode="text"
+                      autoCapitalize="words"
+                      autoComplete="name"
+                      enterKeyHint="next"
                       aria-describedby="nome-help"
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
@@ -96,6 +100,10 @@ const ContactPage = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
+                      inputMode="email"
+                      autoCapitalize="none"
+                      autoComplete="email"
+                      enterKeyHint="next"
                       aria-describedby="email-help"
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
@@ -135,6 +143,10 @@ const ContactPage = () => {
                     required
                     rows={6}
                     placeholder="Descrivi la tua richiesta o domanda..."
+                    inputMode="text"
+                    autoCapitalize="sentences"
+                    autoCorrect="on"
+                    enterKeyHint="send"
                     aria-describedby="messaggio-help"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                   />
