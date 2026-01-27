@@ -2,6 +2,15 @@
 const nextConfig = {
   output: 'export', // ENABLED FOR FIREBASE HOSTING
   trailingSlash: true,
+  
+  // ============================================================================
+  // BUILD ID - CRITICAL FOR CACHE BUSTING
+  // ============================================================================
+  generateBuildId: async () => {
+    return process.env.VERCEL_GIT_COMMIT_SHA || 
+           process.env.RENDER_GIT_COMMIT || 
+           `build-${Date.now()}`;
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -60,6 +69,22 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      // ========================================================================
+      // HTML PAGES - NO CACHE (always fresh)
+      // ========================================================================
+      {
+        source: '/:path(.html)?',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, no-cache, must-revalidate, max-age=0',
+          },
+          {
+            key: 'Pragma',
+            value: 'no-cache',
           },
         ],
       },
